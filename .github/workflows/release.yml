@@ -1,0 +1,31 @@
+name: Package Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create zip package
+        run: |
+          zip -r Chatbox-for-Obsidian.zip \
+            Css/ \
+            "Chat Generator/" \
+            README.md \
+            README_EN.md \
+            LICENSE.md
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Chatbox-for-Obsidian.zip
+          name: Chatbox ${{ github.ref_name }}
+          body: |
+            下载后解压，将 `Css/` 和 `Chat Generator/` 放入 Obsidian 库即可使用。
+
+            Extract the zip, then copy `Css/` and `Chat Generator/` into your Obsidian vault.
