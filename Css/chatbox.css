@@ -1,0 +1,3310 @@
+/**
+ * chatbox对话框
+ * @author: 千野
+ * @description: 改造自稻米鼠老师的TimeLine和chat-bubble，显示对话形式的callout视图
+ * @created: 2024-08-08
+ * @updated: 2026-08-21
+ * @version: 1.0.0
+ */
+
+/* === Style Settings === */
+
+/* @settings
+
+name: Chatbox dialogue style
+id: chatbox-css-layout
+settings:
+    -
+        id: chatbox-width-settings
+        title: Chatbox size settings
+        title.zh: 框体大小设置
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: chatbox-width-all-settings
+        title: Global settings
+        title.zh: 通用设置
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-border-width
+        title: Outer frame thickness(use metadata frame)
+        title.zh: 外框边框粗细（使用frame属性时）
+        type: variable-number-slider
+        default: 0.25
+        min: 0
+        max: 1
+        step: 0.05
+        format: rem
+    -
+        id: chatbox-border-radius
+        title: Outer frame radius(use metadata frame)
+        title.zh: 外框圆角（使用frame属性时）
+        type: variable-number-slider
+        default: 1.2
+        min: 0
+        max: 4
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-border-style
+        title: Frame line style
+        title.zh: 框线样式
+        type: variable-select
+        default: solid
+        options:
+            -
+                label: solid
+                value: solid
+            -
+                label: dash
+                value: dashed
+            -
+                label: dot
+                value: dotted
+            -
+                label: double
+                value: double
+    -
+        id: chatbox-max-height
+        title: Frame max height(use metadata fix)
+        title.zh: 整个框体高度（使用fix属性时）
+        type: variable-number-slider
+        default: 41
+        min: 17
+        max: 100
+        step: 1
+        format: vh
+    -
+        id: chatbox-width-normal-settings
+        title: Default/bbs/pop mod
+        title.zh: 普通/bbs/pop模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-max-width
+        title: Frame max width(default/bbs/pop mod)
+        title.zh: 整个框体宽度（普通/bbs/pop模式）
+        type: variable-number-slider
+        default: 100
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-nowrap-max-width
+        title: Dialogue width(default/bbs/pop mod)
+        title.zh: 单个对话框宽度（普通/bbs/pop模式）
+        type: variable-number-slider
+        default: 100
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-short-max-width
+        title: Dialogue max width(use metadata short)
+        title.zh: 单个对话框最大宽度（使用short属性时）
+        type: variable-number-slider
+        default: 85
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-inner-margin
+        title: Dialogue spacing(default/bbs/pop mod)
+        title.zh: 对话框间距（普通/bbs/pop模式）
+        type: variable-number-slider
+        default: 0
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-p-inner-margin
+        title: Annotation paragraph spacing(default/bbs/pop mod)
+        title.zh: 注释段落间距（普通/bbs/pop模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-after-border-width
+        title: Dialogue frame thickness(default)
+        title.zh: 对话框边框粗细（普通模式）
+        type: variable-number-slider
+        default: 0.2
+        min: 0
+        max: 1
+        step: 0.05
+        format: rem
+    -
+        id: chatbox-li-border-radius
+        title: Dialogue frame radius(default)
+        title.zh: 对话框圆角（普通模式）
+        type: variable-number-slider
+        default: 1.4
+        min: 0
+        max: 4
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-after-bbs-border-radius
+        title: Dialogue frame radius(bbs mod,affects mouse hovering color)
+        title.zh: 对话框圆角（bbs模式 影响鼠标悬停色）
+        type: variable-number-slider
+        default: 1
+        min: 0
+        max: 4
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-width
+        title: Avatar frame size(default/bbs/pop mod)
+        title.zh: 头像框大小（普通/bbs/pop模式）
+        type: variable-number-slider
+        default: 6.5
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-border-radius
+        title: Avatar frame radius(default/bbs/pop mod)
+        title.zh: 头像框圆角（普通/bbs/pop模式）
+        type: variable-number-slider
+        default: 14
+        min: 0
+        max: 50
+        step: 0.5
+    -
+        id: chatbox-img-border-width
+        title: Avatar frame thickness(default/bbs/pop mod)
+        title.zh: 头像框边框粗细（普通/bbs/pop模式）
+        type: variable-number-slider
+        default: 0.15
+        min: 0
+        max: 1
+        step: 0.05
+        format: rem
+    -
+        id: chatbox-li-margin-left
+        title: Text box position(default/bbs mod)
+        title.zh: 文本框位置（普通/bbs模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-noname-margin-left
+        title: Text box position(use metadata noname)
+        title.zh: 文本框位置（使用noname属性时）
+        type: variable-number-slider
+        default: 0
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-text-size
+        title: Text font size(default/bbs/pop mod)
+        title.zh: 文本大小（普通/bbs/pop模式）
+        type: variable-number-slider
+        default: 1
+        min: 0.5
+        max: 3.5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-padding
+        title: Name box width(default/bbs mod)
+        title.zh: 名字框宽度（普通/bbs模式）
+        type: variable-number-slider
+        default: 0.8
+        min: 0
+        max: 2
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-font-size
+        title: Name size(default/bbs/pop mod)
+        title.zh: 名字大小（普通/bbs/pop模式）
+        type: variable-number-slider
+        default: 0.9
+        min: 0.2
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-border-radius
+        title: Name box radius(default/bbs mod)
+        title.zh: 名字框圆角（普通/bbs模式）
+        type: variable-number-slider
+        default: 0.8
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-left
+        title: Name box horizontal position(default/bbs mod)
+        title.zh: 名字水平位置（普通/bbs模式）
+        type: variable-number-slider
+        default: 0
+        min: -5
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-top
+        title: Name box vertical position(default/bbs mod)
+        title.zh: 名字垂直位置（普通/bbs模式）
+        type: variable-number-slider
+        default: 0
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-before-border-width
+        title: Name box line thickness(default/bbs mod)
+        title.zh: 名字框横线粗细（普通/bbs模式）
+        type: variable-number-slider
+        default: 0.15
+        min: 0
+        max: 0.5
+        step: 0.05
+        format: rem
+    -
+        id: chatbox-width-pop-settings
+        title: Pop mod extra settings
+        title.zh: pop模式额外设置
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-img-pop-noname-width
+        title: Avatar frame size(use metadata noname)
+        title.zh: 头像框大小（使用noname属性时）
+        type: variable-number-slider
+        default: 5
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-pop-border-radius
+        title: Dialogue frame radius(pop mod)
+        title.zh: 对话框圆角（pop模式）
+        type: variable-number-slider
+        default: 1
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-pop-margin-left
+        title: Text box position(pop mod)
+        title.zh: 文本框位置（pop模式）
+        type: variable-number-slider
+        default: 0.6
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-pop-left
+        title: Name box horizontal position(pop mod)
+        title.zh: 名字水平位置（pop模式）
+        type: variable-number-slider
+        default: -1
+        min: -5
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-pop-top
+        title: Name box vertical position(pop mod)
+        title.zh: 名字垂直位置（pop模式）
+        type: variable-number-slider
+        default: 0.3
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-before-pop-border-width
+        title: Triangle size(pop mod)
+        title.zh: 三角大小（pop模式）
+        type: variable-number-slider
+        default: 1
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-width-wechat-settings
+        title: Wechat mod
+        title.zh: wechat 微信模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-wechat-max-width
+        title: Frame max width(wechat mod)
+        title.zh: 整个框体宽度（wechat模式）
+        type: variable-number-slider
+        default: 80
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-wechat-nowrap-max-width
+        title: Dialogue max width(wechat mod use short as default)
+        title.zh: 单个对话框最大宽度（wechat默认使用short属性）
+        type: variable-number-slider
+        default: 75
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-wechat-inner-margin
+        title: Dialogue spacing(wechat mod)
+        title.zh: 对话框间距（wechat模式）
+        type: variable-number-slider
+        default: 0
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-p-wechat-inner-margin
+        title: Annotation paragraph spacing(wechat mod)
+        title.zh: 注释段落间距（wechat模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-wechat-border-radius
+        title: Dialogue frame radius(wechat mod)
+        title.zh: 对话框圆角（wechat模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 1.5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-wechat-width
+        title: Avatar frame size(wechat mod)
+        title.zh: 头像框大小（wechat模式）
+        type: variable-number-slider
+        default: 4
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-wechat-noname-width
+        title: Avatar frame size(use metadata noname)
+        title.zh: 头像框大小（使用noname属性时）
+        type: variable-number-slider
+        default: 2.6
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-wechat-border-radius
+        title: Avatar frame radius(wechat mod)
+        title.zh: 头像框圆角（wechat模式）
+        type: variable-number-slider
+        default: 12.5
+        min: 0
+        max: 50
+        step: 0.5
+    -
+        id: chatbox-img-wechat-border-width
+        title: Avatar frame thickness(wechat mod)
+        title.zh: 头像框边框粗细（wechat模式）
+        type: variable-number-slider
+        default: 0
+        min: 0
+        max: 1
+        step: 0.05
+        format: rem
+    -
+        id: chatbox-li-wechat-margin-left
+        title: Text box position(wechat mod)
+        title.zh: 文本框位置（wechat模式）
+        type: variable-number-slider
+        default: 0.3
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-wechat-text-size
+        title: Text font size(wechat mod)
+        title.zh: 文本大小（wechat模式）
+        type: variable-number-slider
+        default: 1
+        min: 0.5
+        max: 3.5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-wechat-font-size
+        title: Name size(wechat mod)
+        title.zh: 名字大小（wechat模式）
+        type: variable-number-slider
+        default: 0.8
+        min: 0.2
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-wechat-left
+        title: Name box horizontal position(wechat mod)
+        title.zh: 名字水平位置（wechat模式）
+        type: variable-number-slider
+        default: 0
+        min: -5
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-wechat-top
+        title: Name box vertical position(wechat mod)
+        title.zh: 名字垂直位置（wechat模式）
+        type: variable-number-slider
+        default: 0.1
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-before-wechat-border-width
+        title: Triangle size(wechat mod)
+        title.zh: 三角大小（wechat模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-width-qqchat-settings
+        title: QQchat mod
+        title.zh: qqchat QQ模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-qqchat-max-width
+        title: Frame max width(qqchat mod)
+        title.zh: 整个框体宽度（qqchat模式）
+        type: variable-number-slider
+        default: 80
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-qqchat-nowrap-max-width
+        title: Dialogue max width(qqchat mod use short as default)
+        title.zh: 单个对话框最大宽度（qqchat默认使用short属性）
+        type: variable-number-slider
+        default: 75
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-qqchat-inner-margin
+        title: Dialogue spacing(qqchat mod)
+        title.zh: 对话框间距（qqchat模式）
+        type: variable-number-slider
+        default: 0
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-p-qqchat-inner-margin
+        title: Annotation paragraph spacing(qqchat mod)
+        title.zh: 注释段落间距（qqchat模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-qqchat-border-radius
+        title: Dialogue frame radius(qqchat mod)
+        title.zh: 对话框圆角（qqchat模式）
+        type: variable-number-slider
+        default: 1
+        min: 0
+        max: 1.5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-qqchat-width
+        title: Avatar frame size(qqchat mod)
+        title.zh: 头像框大小（qqchat模式）
+        type: variable-number-slider
+        default: 4
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-qqchat-noname-width
+        title: Avatar frame size(use metadata noname)
+        title.zh: 头像框大小（使用noname属性时）
+        type: variable-number-slider
+        default: 2.6
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-qqchat-border-radius
+        title: Avatar frame radius(qqchat mod)
+        title.zh: 头像框圆角（qqchat模式）
+        type: variable-number-slider
+        default: 50
+        min: 0
+        max: 50
+        step: 0.5
+    -
+        id: chatbox-img-qqchat-border-width
+        title: Avatar frame thickness(qqchat mod)
+        title.zh: 头像框边框粗细（qqchat模式）
+        type: variable-number-slider
+        default: 0
+        min: 0
+        max: 1
+        step: 0.05
+        format: rem
+    -
+        id: chatbox-li-qqchat-margin-left
+        title: Text box position(qqchat mod)
+        title.zh: 文本框位置（qqchat模式）
+        type: variable-number-slider
+        default: 0.3
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-qqchat-text-size
+        title: Text font size(qqchat mod)
+        title.zh: 文本大小（qqchat模式）
+        type: variable-number-slider
+        default: 1
+        min: 0.5
+        max: 3.5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-qqchat-font-size
+        title: Name size(qqchat mod)
+        title.zh: 名字大小（qqchat模式）
+        type: variable-number-slider
+        default: 0.8
+        min: 0.2
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-qqchat-left
+        title: Name box horizontal position(qqchat mod)
+        title.zh: 名字水平位置（qqchat模式）
+        type: variable-number-slider
+        default: 0
+        min: -5
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-qqchat-top
+        title: Name box vertical position(qqchat mod)
+        title.zh: 名字垂直位置（qqchat模式）
+        type: variable-number-slider
+        default: 0.1
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-before-qq-width
+        title: Bend width(qqchat mod)
+        title.zh: 弯角宽度（qqchat模式）
+        type: variable-number-slider
+        default: 1.2
+        min: 0
+        max: 2
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-before-shadow-height
+        title: Bend height(qqchat mod)
+        title.zh: 弯角粗细（qqchat模式）
+        type: variable-number-slider
+        default: 0.4
+        min: 0.2
+        max: 1
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-width-linshe-settings
+        title: Linshe mod
+        title.zh: linshe 邻舍模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-linshe-max-width
+        title: Frame max width(linshe mod)
+        title.zh: 整个框体宽度（linshe模式）
+        type: variable-number-slider
+        default: 100
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-linshe-nowrap-max-width
+        title: Dialogue max width(linshe mod use short as default)
+        title.zh: 单个对话框最大宽度（linshe默认使用short属性）
+        type: variable-number-slider
+        default: 75
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-linshe-inner-margin
+        title: Dialogue spacing(linshe mod)
+        title.zh: 对话框间距（linshe模式）
+        type: variable-number-slider
+        default: 0.2
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-p-linshe-inner-margin
+        title: Annotation paragraph spacing(linshe mod)
+        title.zh: 注释段落间距（linshe模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-linshe-border-radius
+        title: Dialogue frame radius(linshe mod)
+        title.zh: 对话框圆角（linshe模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 1.5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-linshe-width
+        title: Avatar frame size(linshe mod)
+        title.zh: 头像框大小（linshe模式）
+        type: variable-number-slider
+        default: 2.6
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-linshe-noname-width
+        title: Avatar frame size(use metadata noname)
+        title.zh: 头像框大小（使用noname属性时）
+        type: variable-number-slider
+        default: 2.6
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-linshe-border-radius
+        title: Avatar frame radius(linshe mod)
+        title.zh: 头像框圆角（linshe模式）
+        type: variable-number-slider
+        default: 50
+        min: 0
+        max: 50
+        step: 0.5
+    -
+        id: chatbox-img-linshe-border-width
+        title: Avatar frame thickness(linshe mod)
+        title.zh: 头像框边框粗细（linshe模式）
+        type: variable-number-slider
+        default: 0
+        min: 0
+        max: 1
+        step: 0.05
+        format: rem
+    -
+        id: chatbox-li-linshe-margin-left
+        title: Text box position(linshe mod)
+        title.zh: 文本框位置（linshe模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-linshe-text-size
+        title: Text font size(linshe mod)
+        title.zh: 文本大小（linshe模式）
+        type: variable-number-slider
+        default: 0.9
+        min: 0.5
+        max: 3.5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-linshe-font-size
+        title: Name size(linshe mod)
+        title.zh: 名字大小（linshe模式）
+        type: variable-number-slider
+        default: 0.7
+        min: 0.2
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-linshe-left
+        title: Name box horizontal position(linshe mod)
+        title.zh: 名字水平位置（linshe模式）
+        type: variable-number-slider
+        default: 0
+        min: -5
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-linshe-top
+        title: Name box vertical position(linshe mod)
+        title.zh: 名字垂直位置（linshe模式）
+        type: variable-number-slider
+        default: 0.1
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-width-baker-settings
+        title: Baker mod
+        title.zh: Baker模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-baker-max-width
+        title: Frame max width(baker mod)
+        title.zh: 整个框体宽度（baker模式）
+        type: variable-number-slider
+        default: 80
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-baker-nowrap-max-width
+        title: Dialogue max width(baker mod use short as default)
+        title.zh: 单个对话框最大宽度（baker默认使用short属性）
+        type: variable-number-slider
+        default: 75
+        min: 15
+        max: 100
+        step: 1
+    -
+        id: chatbox-baker-inner-margin
+        title: Dialogue spacing(baker mod)
+        title.zh: 对话框间距（baker模式）
+        type: variable-number-slider
+        default: 0
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-p-baker-inner-margin
+        title: Annotation paragraph spacing(baker mod)
+        title.zh: 注释段落间距（baker模式）
+        type: variable-number-slider
+        default: 0.5
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-baker-border-radius
+        title: Dialogue frame radius(baker mod)
+        title.zh: 对话框圆角（baker模式）
+        type: variable-number-slider
+        default: 1
+        min: 0
+        max: 1.5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-baker-width
+        title: Avatar frame size(baker mod)
+        title.zh: 头像框大小（baker模式）
+        type: variable-number-slider
+        default: 3.5
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-baker-noname-width
+        title: Avatar frame size(use metadata noname)
+        title.zh: 头像框大小（使用noname属性时）
+        type: variable-number-slider
+        default: 3.5
+        min: 2.1
+        max: 10
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-img-baker-border-radius
+        title: Avatar frame radius(baker mod)
+        title.zh: 头像框圆角（baker模式）
+        type: variable-number-slider
+        default: 50
+        min: 0
+        max: 50
+        step: 0.5
+    -
+        id: chatbox-img-baker-border-width
+        title: Avatar frame thickness(baker mod)
+        title.zh: 头像框边框粗细（baker模式）
+        type: variable-number-slider
+        default: 0.1
+        min: 0
+        max: 1
+        step: 0.05
+        format: rem
+    -
+        id: chatbox-li-baker-margin-left
+        title: Text box position(baker mod)
+        title.zh: 文本框位置（baker模式）
+        type: variable-number-slider
+        default: 0.3
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-baker-text-size
+        title: Text font size(baker mod)
+        title.zh: 文本大小（baker模式）
+        type: variable-number-slider
+        default: 1
+        min: 0.5
+        max: 3.5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-baker-font-size
+        title: Name size(baker mod)
+        title.zh: 名字大小（baker模式）
+        type: variable-number-slider
+        default: 0.8
+        min: 0.2
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-baker-left
+        title: Name box horizontal position(baker mod)
+        title.zh: 名字水平位置（baker模式）
+        type: variable-number-slider
+        default: -0.5
+        min: -5
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-em-baker-top
+        title: Name box vertical position(baker mod)
+        title.zh: 名字垂直位置（baker模式）
+        type: variable-number-slider
+        default: 0.1
+        min: 0
+        max: 5
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-li-before-baker-height
+        title: Tail Size(baker mod)
+        title.zh: 弯角大小（baker模式）
+        type: variable-number-slider
+        default: 0.7
+        min: 0
+        max: 3
+        step: 0.1
+        format: rem
+    -
+        id: chatbox-color-settings
+        title: Chatbox color settings
+        title.zh: 框体颜色设置
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: chatbox-color-normal-settings
+        title: Default/bbs/pop mod
+        title.zh: 普通/bbs/pop模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-border-color
+        title: Outer frame color(use metadata frame)
+        title.zh: 外框颜色（使用frame属性时）
+        description: Theme color as default
+        description.zh: 默认为主题色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-title-color
+        title: Title color(default/bbs/pop mod)
+        title.zh: 标题颜色（普通/bbs/pop模式）
+        description: Theme color as default
+        description.zh: 默认为主题色，标题不显示时无效
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-color
+        title: Left color(default/bbs mod)
+        title.zh: 左边颜色（普通/bbs模式）
+        description: Theme color as default
+        description.zh: 默认为主题色
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-color
+        title: Right color(default/bbs mod)
+        title.zh: 右边颜色（普通/bbs模式）
+        description: Relative color of theme color as default
+        description.zh: 默认为主题色的相对色
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-leftname-color
+        title: Left name color(default/bbs mod)
+        title.zh: 左边名字颜色（普通/bbs模式）
+        description: Theme background color as default
+        description.zh: 默认为主题背景色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-rightname-color
+        title: Right name color(default/bbs mod)
+        title.zh: 右边名字颜色（普通/bbs模式）
+        description: Theme background color as default
+        description.zh: 默认为主题背景色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-text-color
+        title: Left text color(default/bbs/pop mod)
+        title.zh: 左边文本颜色（普通/bbs/pop模式）
+        description: Theme font color as default
+        description.zh: 默认为主题字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-text-color
+        title: Right text color(default/bbs/pop mod)
+        title.zh: 右边文本颜色（普通/bbs/pop模式）
+        description: Theme font color as default
+        description.zh: 默认为主题字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-strong-color
+        title: Left bold color(default/bbs/pop mod)
+        title.zh: 左边粗体颜色（普通/bbs/pop模式）
+        description: Theme bold color as default
+        description.zh: 默认为主题设定
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-strong-color
+        title: Right bold color(default/bbs/pop mod)
+        title.zh: 右边粗体颜色（普通/bbs/pop模式）
+        description: Theme bold color as default
+        description.zh: 默认为主题设定
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-em-color
+        title: Left italic color(default/bbs/pop mod)
+        title.zh: 左边斜体颜色（普通/bbs/pop模式）
+        description: Theme italic color as default
+        description.zh: 默认为主题设定
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-em-color
+        title: Right italic color(default/bbs/pop mod)
+        title.zh: 右边斜体颜色（普通/bbs/pop模式）
+        description: Theme italic color as default
+        description.zh: 默认为主题设定
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-p-font-color
+        title: Annotation paragraph color(default/bbs/pop mod)
+        title.zh: 注释段落颜色（普通/bbs/pop模式）
+        description: Light theme font color as default
+        description.zh: 默认为浅色字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-color-pop-settings
+        title: Pop mod extra settings
+        title.zh: pop模式额外设置
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-left-pop-color
+        title: Left bubble color(pop mod)
+        title.zh: 左边气泡颜色（pop模式）
+        description: Calculated from theme color as default
+        description.zh: 默认由主题色计算得出
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-pop-color
+        title: Right bubble color(pop mod)
+        title.zh: 右边气泡颜色（pop模式）
+        description: Calculated from relative color of theme color as default
+        description.zh: 默认由主题色的相对色计算得出
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-leftname-pop-color
+        title: Left name color(pop mod)
+        title.zh: 左边名字颜色（pop模式）
+        description: Theme color as default
+        description.zh: 默认为主题色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-rightname-pop-color
+        title: Right name color(pop mod)
+        title.zh: 右边名字颜色（pop模式）
+        description: Relative color of theme color as default
+        description.zh: 默认为主题色的相对色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-color-wechat-settings
+        title: Wechat mod
+        title.zh: wechat 微信模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-border-wechat-color
+        title: Outer frame color(use metadata frame)
+        title.zh: 外框颜色（使用frame属性时）
+        description: Green as default
+        description.zh: 默认为绿色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-background-wechat-color
+        title: Outer frame background color(wechat mod)
+        title.zh: 外框背景颜色（wechat模式）
+        description: Default is same as wechat
+        description.zh: 默认为微信同款
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-title-wechat-color
+        title: Title color(wechat mod)
+        title.zh: 标题颜色（wechat模式）
+        description: Theme font color as default
+        description.zh: 默认为字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-wechat-color
+        title: Left bubble color(wechat mod)
+        title.zh: 左边气泡颜色（wechat模式）
+        description: Default is same as wechat
+        description.zh: 默认为微信同款
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-wechat-color
+        title: Right bubble color(wechat mod)
+        title.zh: 右边气泡颜色（wechat模式）
+        description: Default is same as wechat
+        description.zh: 默认为微信同款
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-leftname-wechat-color
+        title: Left name color(wechat mod)
+        title.zh: 左边名字颜色（wechat模式）
+        description: Light theme font color as default
+        description.zh: 默认为浅色字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-rightname-wechat-color
+        title: Right name color(wechat mod)
+        title.zh: 右边名字颜色（wechat模式）
+        description: Green as default
+        description.zh: 默认为绿色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-wechat-text-color
+        title: Left text color(wechat mod)
+        title.zh: 左边文本颜色（wechat模式）
+        description: Black/white as default
+        description.zh: 默认为黑/白
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-wechat-text-color
+        title: Right text color(wechat mod)
+        title.zh: 右边文本颜色（wechat模式）
+        description: Black as default
+        description.zh: 默认为黑色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-wechat-strong-color
+        title: Left bold color(wechat mod)
+        title.zh: 左边粗体颜色（wechat模式）
+        description: Orange/yellow as default
+        description.zh: 默认为橙/黄
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-wechat-strong-color
+        title: Right bold color(wechat mod)
+        title.zh: 右边粗体颜色（wechat模式）
+        description: Orange/yellow as default
+        description.zh: 默认为橙/黄
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-wechat-em-color
+        title: Left italic color(wechat mod)
+        title.zh: 左边斜体颜色（wechat模式）
+        description: Green as default
+        description.zh: 默认为绿色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-wechat-em-color
+        title: Right italic color(wechat mod)
+        title.zh: 右边斜体颜色（wechat模式）
+        description: Dark green as default
+        description.zh: 默认为深绿色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-p-wechat-font-color
+        title: Annotation paragraph color(wechat mod)
+        title.zh: 注释段落颜色（wechat模式）
+        description: Light theme font color as default
+        description.zh: 默认为浅色字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-color-qqchat-settings
+        title: QQchat mod
+        title.zh: qqchat QQ模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-border-qqchat-color
+        title: Outer frame color(use metadata frame)
+        title.zh: 外框颜色（使用frame属性时）
+        description: Blue/black as default
+        description.zh: 默认为蓝/黑
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-background-qqchat-color
+        title: Outer frame background color(qqchat mod)
+        title.zh: 外框背景颜色（qqchat模式）
+        description: Default is same as QQ
+        description.zh: 默认为QQ同款
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-title-qqchat-color
+        title: Title color(qqchat mod)
+        title.zh: 标题颜色（qqchat模式）
+        description: Theme font color as default
+        description.zh: 默认为字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-qqchat-color
+        title: Left bubble color(qqchat mod)
+        title.zh: 左边气泡颜色（qqchat模式）
+        description: Default is same as QQ
+        description.zh: 默认为QQ同款
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-qqchat-color
+        title: Right bubble color(qqchat mod)
+        title.zh: 右边气泡颜色（qqchat模式）
+        description: Default is same as QQ
+        description.zh: 默认为QQ同款
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-leftname-qqchat-color
+        title: Left name color(qqchat mod)
+        title.zh: 左边名字颜色（qqchat模式）
+        description: Light theme font color as default
+        description.zh: 默认为浅色字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-rightname-qqchat-color
+        title: Right name color(qqchat mod)
+        title.zh: 右边名字颜色（qqchat模式）
+        description: Light theme font color as default
+        description.zh: 默认为浅色字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-qqchat-text-color
+        title: Left text color(qqchat mod)
+        title.zh: 左边文本颜色（qqchat模式）
+        description: Black/white as default
+        description.zh: 默认为黑/白
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-qqchat-text-color
+        title: Right text color(qqchat mod)
+        title.zh: 右边文本颜色（qqchat模式）
+        description: White as default
+        description.zh: 默认为白色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-qqchat-strong-color
+        title: Left bold color(qqchat mod)
+        title.zh: 左边粗体颜色（qqchat模式）
+        description: Orange/red as default
+        description.zh: 默认为橙/红
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-qqchat-strong-color
+        title: Right bold color(qqchat mod)
+        title.zh: 右边粗体颜色（qqchat模式）
+        description: Yellow/red as default
+        description.zh: 默认为黄/红
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-qqchat-em-color
+        title: Left italic color(qqchat mod)
+        title.zh: 左边斜体颜色（qqchat模式）
+        description: Blue/pink as default
+        description.zh: 默认为蓝/粉
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-qqchat-em-color
+        title: Right italic color(qqchat mod)
+        title.zh: 右边斜体颜色（qqchat模式）
+        description: Blue/pink as default
+        description.zh: 默认为蓝/粉
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-p-qqchat-font-color
+        title: Annotation paragraph color(qqchat mod)
+        title.zh: 注释段落颜色（qqchat模式）
+        description: Light theme font color as default
+        description.zh: 默认为浅色字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-color-linshe-settings
+        title: Linshe mod
+        title.zh: linshe 邻舍模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-border-linshe-color
+        title: Outer frame color(use metadata frame)
+        title.zh: 外框颜色（使用frame属性时）
+        description: Right bubble color as default
+        description.zh: 默认为右侧气泡色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-background-linshe-color
+        title: Outer frame background color(linshe mod)
+        title.zh: 外框背景颜色（linshe模式）
+        description: Default is same as linshe
+        description.zh: 默认为邻舍同款
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-title-linshe-color
+        title: Title color(linshe mod)
+        title.zh: 标题颜色（linshe模式）
+        description: Theme font color as default
+        description.zh: 默认为字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-linshe-color
+        title: Left bubble color(linshe mod)
+        title.zh: 左边气泡颜色（linshe模式）
+        description: Default is same as linshe
+        description.zh: 默认为邻舍同款
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-linshe-color
+        title: Right bubble color(linshe mod)
+        title.zh: 右边气泡颜色（linshe模式）
+        description: Default is same as linshe
+        description.zh: 默认为邻舍同款
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-leftname-linshe-color
+        title: Left name color(linshe mod)
+        title.zh: 左边名字颜色（linshe模式）
+        description: Light brown as default
+        description.zh: 默认为浅咖啡色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-rightname-linshe-color
+        title: Right name color(linshe mod)
+        title.zh: 右边名字颜色（linshe模式）
+        description: Light brown as default
+        description.zh: 默认为浅咖啡色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-linshe-text-color
+        title: Left text color(linshe mod)
+        title.zh: 左边文本颜色（linshe模式）
+        description: Dark warm gray as default
+        description.zh: 默认为深暖灰
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-linshe-text-color
+        title: Right text color(linshe mod)
+        title.zh: 右边文本颜色（linshe模式）
+        description: White as default
+        description.zh: 默认为白色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-linshe-strong-color
+        title: Left bold color(linshe mod)
+        title.zh: 左边粗体颜色（linshe模式）
+        description: Right bubble color as default
+        description.zh: 默认为右侧气泡色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-linshe-strong-color
+        title: Right bold color(linshe mod)
+        title.zh: 右边粗体颜色（linshe模式）
+        description: Light yellow as default
+        description.zh: 默认为浅黄
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-linshe-em-color
+        title: Left italic color(linshe mod)
+        title.zh: 左边斜体颜色（linshe模式）
+        description: Right bubble color as default
+        description.zh: 默认为右侧气泡色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-linshe-em-color
+        title: Right italic color(linshe mod)
+        title.zh: 右边斜体颜色（linshe模式）
+        description: Light yellow as default
+        description.zh: 默认为浅黄
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-p-linshe-font-color
+        title: Annotation paragraph color(linshe mod)
+        title.zh: 注释段落颜色（linshe模式）
+        description: Light brown as default
+        description.zh: 默认为浅咖啡色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-color-baker-settings
+        title: Baker mod
+        title.zh: Baker模式
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: chatbox-border-baker-color
+        title: Outer frame color(use metadata frame)
+        title.zh: 外框颜色（使用frame属性时）
+        description: Left bubble color as default
+        description.zh: 默认为左侧气泡色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-background-baker-color
+        title: Outer frame background color(baker mod)
+        title.zh: 外框背景颜色（baker模式）
+        description: Default is same as baker
+        description.zh: 默认为Baker同款
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-title-baker-color
+        title: Title color(baker mod)
+        title.zh: 标题颜色（baker模式）
+        description: Theme font color as default
+        description.zh: 默认为字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-baker-color
+        title: Left bubble color(baker mod)
+        title.zh: 左边气泡颜色（baker模式）
+        description: Default is same as baker
+        description.zh: 默认为Baker同款
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-baker-color
+        title: Right bubble color(baker mod)
+        title.zh: 右边气泡颜色（baker模式）
+        description: Default is same as baker
+        description.zh: 默认为Baker同款
+        type: variable-themed-color
+        format: hsl
+        opacity: false
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-leftname-baker-color
+        title: Left name color(baker mod)
+        title.zh: 左边名字颜色（baker模式）
+        description: Light theme font color as default
+        description.zh: 默认为浅色字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-rightname-baker-color
+        title: Right name color(baker mod)
+        title.zh: 右边名字颜色（baker模式）
+        description: Light theme font color as default
+        description.zh: 默认为浅色字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-baker-text-color
+        title: Left text color(baker mod)
+        title.zh: 左边文本颜色（baker模式）
+        description: Light gray as default
+        description.zh: 默认为浅灰
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-baker-text-color
+        title: Right text color(baker mod)
+        title.zh: 右边文本颜色（baker模式）
+        description: Dark as default
+        description.zh: 默认为深色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-baker-strong-color
+        title: Left bold color(baker mod)
+        title.zh: 左边粗体颜色（baker模式）
+        description: Red as default
+        description.zh: 默认为红
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-baker-strong-color
+        title: Right bold color(baker mod)
+        title.zh: 右边粗体颜色（baker模式）
+        description: Default is same as right bubble color
+        description.zh: 默认为右侧气泡色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-left-baker-em-color
+        title: Left italic color(baker mod)
+        title.zh: 左边斜体颜色（baker模式）
+        description: Pink as default
+        description.zh: 默认为粉
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-right-baker-em-color
+        title: Right italic color(baker mod)
+        title.zh: 右边斜体颜色（baker模式）
+        description: Default is same as right bubble color
+        description.zh: 默认为右侧气泡色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-p-baker-font-color
+        title: Annotation paragraph color(baker mod)
+        title.zh: 注释段落颜色（baker模式）
+        description: Light theme font color as default
+        description.zh: 默认为浅色字体颜色
+        type: variable-themed-color
+        format: hsl
+        opacity: true
+        default-light: '#'
+        default-dark: '#'
+    -
+        id: chatbox-other-settings
+        title: Chatbox other settings
+        title.zh: 框体其他设置
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: toggle-chatbox-shadow
+        title: Enable outer frame shadow
+        title.zh: 开启外框阴影
+        type: class-toggle
+        default: true
+    -
+        id: toggle-chatbox-inner-shadow
+        title: Enable dialogue shadow(default)
+        title.zh: 开启单个对话框的阴影（普通模式）
+        type: class-toggle
+        default: true
+    -
+        id: toggle-chatbox-hover
+        title: Enable mouse hover color
+        title.zh: 开启鼠标悬停色
+        type: class-toggle
+        default: true
+    -
+        id: toggle-chatbox-text-right
+        title: Turn off left alignment in right box(use metadata short)
+        title.zh: 关闭short属性右框的左对齐
+        type: class-toggle
+        default: false
+    -
+        id: toggle-chatbox-text-center
+        title: Enable vertical centering of default text
+        title.zh: 开启默认文本的垂直居中
+        type: class-toggle
+        default: false
+    -
+        id: toggle-chatbox-text-noname-nocenter
+        title: Turn off vertical centering of text(use metadata noname)
+        title.zh: 关闭noname属性的文本垂直居中
+        type: class-toggle
+        default: false
+    -
+        id: chatbox-debug-settings
+        title: debug
+        title.zh: debug用
+        description: Don't enable it under normal conditions
+        description.zh: 正常情况不要开启
+        type: heading
+        level: 3
+        collapsed: true
+    -
+        id: toggle-chatbox-border
+        title: Enable Outer frame
+        title.zh: 开启外框
+        type: class-toggle
+        default: false
+    -
+        id: toggle-chatbox-ul-border
+        title: Enable ul frame
+        title.zh: 开启ul边框
+        type: class-toggle
+        default: false
+    -
+        id: toggle-chatbox-li-border
+        title: Enable li frame
+        title.zh: 开启li边框
+        type: class-toggle
+        default: false
+    -
+        id: toggle-chatbox-p-border
+        title: Enable p frame
+        title.zh: 开启p边框
+        type: class-toggle
+        default: false
+    -
+        id: toggle-chatbox-li-bottom
+        title: Enable li bottom 0
+        title.zh: li底部0
+        type: class-toggle
+        default: false
+
+*/
+
+/* === 默认设置 === */
+
+body {
+    --chatbox-max-width: 100;
+    --chatbox-nowrap-max-width: 100;
+    --chatbox-nowrap-max-in-width: var(--chatbox-nowrap-max-width);
+    --chatbox-li-width: auto;
+    --chatbox-short-max-width: 85;
+    --chatbox-max-height: 41vh;
+    --chatbox-inner-margin: 0rem;
+    --chatbox-inner-in-margin: var(--chatbox-inner-margin);
+    --chatbox-wechat-inner-margin: 0rem;
+    --chatbox-qqchat-inner-margin: 0rem;
+    --chatbox-p-inner-margin: 0.5rem;
+    --chatbox-p-inner-in-margin: var(--chatbox-p-inner-margin);
+    --chatbox-p-wechat-inner-margin: 0.5rem;
+    --chatbox-p-qqchat-inner-margin: 0.5rem;
+
+    --chatbox-wechat-max-width: 80;
+    --chatbox-wechat-nowrap-max-width: 75;
+    --chatbox-qqchat-max-width: 80;
+    --chatbox-qqchat-nowrap-max-width: 75;
+    --chatbox-linshe-max-width: 100;
+    --chatbox-linshe-nowrap-max-width: 75;
+    --chatbox-baker-max-width: 80;
+    --chatbox-baker-nowrap-max-width: 75;
+    --chatbox-linshe-inner-margin: 0.2rem;
+    --chatbox-baker-inner-margin: 0rem;
+    --chatbox-p-linshe-inner-margin: 0.5rem;
+    --chatbox-p-baker-inner-margin: 0.5rem;
+
+    --chatbox-border-width: 0.25rem;
+    --chatbox-border-radius: 1.2rem;
+    --chatbox-border-in-radius: 0rem;
+    --chatbox-border-style: solid;
+
+    --chatbox-li-display: block;
+    --chatbox-li-top: 0rem;
+    --chatbox-li-top-change: 0rem;
+    --chatbox-li-margin-left: 0.5rem;
+    --chatbox-li-margin-in-left: var(--chatbox-li-margin-left);
+    --chatbox-li-margin-in-other-left: 0rem;
+    --chatbox-li-noname-margin-left: 0rem;
+    --chatbox-li-pop-margin-left: 0.6rem;
+    --chatbox-li-wechat-margin-left: 0.3rem;
+    --chatbox-li-qqchat-margin-left: 0.3rem;
+    --chatbox-li-text-size: 1rem;
+    --chatbox-li-text-in-size: var(--chatbox-li-text-size);
+    --chatbox-li-wechat-text-size: 1rem;
+    --chatbox-li-qqchat-text-size: 1rem;
+    --chatbox-li-border-radius: 1.4rem;
+    --chatbox-li-border-in-radius: 0rem;
+    --chatbox-li-pop-border-radius: 1rem;
+    --chatbox-li-wechat-border-radius: 0.5rem;
+    --chatbox-li-qqchat-border-radius: 1rem;
+    --chatbox-li-linshe-border-radius: 0.5rem;
+    --chatbox-li-baker-border-radius: 1rem;
+    --chatbox-li-linshe-margin-left: 0.5rem;
+    --chatbox-li-baker-margin-left: 0.3rem;
+    --chatbox-li-linshe-text-size: 0.9rem;
+    --chatbox-li-baker-text-size: 1rem;
+    --chatbox-li-before-baker-height: 0.7rem;
+
+    --chatbox-right-li-text-align: right;
+
+    --chatbox-li-after-border-width: 0.2rem;
+    --chatbox-li-after-border-in-width: var(--chatbox-li-after-border-width);
+    --chatbox-li-after-display: block;
+    --chatbox-li-after-box-shadow: transparent;
+    --chatbox-li-after-border-in-radius: var(--chatbox-li-border-radius);
+    --chatbox-li-after-bbs-border-radius: 1rem;
+    
+    --chatbox-img-width: 6.5rem;
+    --chatbox-img-pos: 0.4rem;
+    --chatbox-img-in-width: var(--chatbox-img-width);
+    --chatbox-img-border-radius: 14;
+    --chatbox-img-border-in-radius: var(--chatbox-img-border-radius);
+    --chatbox-img-border-width: 0.15rem;
+    --chatbox-img-border-in-width: var(--chatbox-img-border-width);
+    --chatbox-img-display: block;
+    --chatbox-img-wechat-width: 4rem;
+    --chatbox-img-wechat-border-radius: 12.5;
+    --chatbox-img-wechat-border-width: 0rem;
+    --chatbox-img-qqchat-width: 4rem;
+    --chatbox-img-qqchat-border-radius: 50;
+    --chatbox-img-qqchat-border-width: 0rem;
+    --chatbox-img-pop-noname-width: 5rem;
+    --chatbox-img-wechat-noname-width: 2.6rem;
+    --chatbox-img-qqchat-noname-width: 2.6rem;
+    --chatbox-img-linshe-width: 2.6rem;
+    --chatbox-img-baker-width: 3.5rem;
+    --chatbox-img-linshe-noname-width: 2.6rem;
+    --chatbox-img-baker-noname-width: 3.5rem;
+    --chatbox-img-linshe-border-radius: 50;
+    --chatbox-img-baker-border-radius: 50;
+    --chatbox-img-linshe-border-width: 0rem;
+    --chatbox-img-baker-border-width: 0.1rem;
+    
+    --chatbox-em-left: 0rem;
+    --chatbox-em-in-left: var(--chatbox-em-left);
+    --chatbox-em-pop-left: -1rem;
+    --chatbox-em-wechat-left: 0rem;
+    --chatbox-em-qqchat-left: 0rem;
+    --chatbox-em-linshe-left: 0rem;
+    --chatbox-em-baker-left: -0.5rem;
+    --chatbox-em-top: 0rem;
+    --chatbox-em-in-top: var(--chatbox-em-top);
+    --chatbox-em-pop-top: 0.3rem;
+    --chatbox-em-wechat-top: 0.1rem;
+    --chatbox-em-qqchat-top: 0.1rem;
+    --chatbox-em-linshe-top: 0.1rem;
+    --chatbox-em-baker-top: 0.1rem;
+    --chatbox-em-display: block;
+    --chatbox-em-padding: 0.8rem;
+    --chatbox-em-in-padding: var(--chatbox-em-padding);
+    --chatbox-em-padding-top: 0rem;
+    --chatbox-em-border-radius: 0.8rem;
+    --chatbox-em-border-in-radius: var(--chatbox-em-border-radius);
+    --chatbox-em-height: 0.6rem;
+    --chatbox-em-font-size: 0.9rem;
+    --chatbox-em-font-in-size: var(--chatbox-em-font-size);
+    --chatbox-em-font-size-change: var(--chatbox-em-font-size);
+    --chatbox-em-wechat-font-size: 0.8rem;
+    --chatbox-em-qqchat-font-size: 0.8rem;
+    --chatbox-em-linshe-font-size: 0.7rem;
+    --chatbox-em-baker-font-size: 0.8rem;
+
+    --chatbox-li-before-left: calc(var(--chatbox-em-in-left) + var(--chatbox-em-padding) + var(--chatbox-em-font-in-size));
+    --chatbox-li-before-border-width: 0.15rem;
+    --chatbox-li-before-border-in-width: var(--chatbox-li-before-border-width);
+    --chatbox-li-before-pop-border-width: 1rem;
+    --chatbox-li-before-wechat-border-width: 0.5rem;
+    --chatbox-li-before-border-style: var(--chatbox-border-style);
+    --chatbox-li-before-border-radius: 1rem;
+    --chatbox-li-before-width: calc(100% - 0.8rem - var(--chatbox-li-before-left) - var(--chatbox-li-after-border-in-width) - var(--chatbox-li-before-border-in-width) * 2);
+    --chatbox-li-before-qq-width: 1.2rem;
+    --chatbox-li-before-height: 0rem;
+    --chatbox-li-before-display: none;
+    --chatbox-li-before-display-change: block;
+    --chatbox-li-before-top: calc(var(--chatbox-li-before-border-in-width) * -2);
+    --chatbox-li-before-shadow-height: 0.4rem;
+    --chatbox-li-before-z-index: -1;
+
+    --chatbox-rightfirst-color: hsl(var(--interactive-accent-hsl));
+    --chatbox-left-color: hsl(var(--interactive-accent-hsl));
+    --chatbox-right-color: hsl(from var(--chatbox-rightfirst-color) calc(h + 47) calc(s + 0.02) calc(l + 0.04));
+
+    --chatbox-leftname-color: var(--background-primary);
+    --chatbox-rightname-color: var(--background-primary);
+    --chatbox-leftname-in-color: var(--chatbox-leftname-color);
+    --chatbox-rightname-in-color: var(--chatbox-rightname-color);
+    --chatbox-leftname-wechat-color: var(--text-muted);
+    --chatbox-leftname-qqchat-color: var(--text-muted);
+    --chatbox-rightname-qqchat-color: var(--text-muted);
+    --chatbox-leftname-linshe-color: #8c8074;
+    --chatbox-rightname-linshe-color: #8c8074;
+    --chatbox-leftname-baker-color: var(--text-muted);
+    --chatbox-rightname-baker-color: var(--text-muted);
+
+    --chatbox-title-color: hsla(var(--interactive-accent-hsl));
+    --chatbox-title-wechat-color: var(--text-normal);
+    --chatbox-title-qqchat-color: var(--text-normal);
+    --chatbox-title-linshe-color: var(--text-normal);
+    --chatbox-title-baker-color: var(--text-normal);
+    --chatbox-p-font-color: var(--text-faint);
+    --chatbox-p-font-in-color: var(--chatbox-p-font-color);
+    --chatbox-p-wechat-font-color: var(--text-faint);
+    --chatbox-p-qqchat-font-color: var(--text-faint);
+    --chatbox-p-linshe-font-color: #8c8074;
+    --chatbox-p-baker-font-color: var(--text-faint);
+    --chatbox-border-color: hsla(var(--interactive-accent-hsl));
+    --chatbox-border-in-color: var(--chatbox-border-color);
+
+    --chatbox-left-text-color: var(--text-normal);
+    --chatbox-right-text-color: var(--text-normal);
+    --chatbox-left-text-in-color: var(--chatbox-left-text-color);
+    --chatbox-right-text-in-color: var(--chatbox-right-text-color);
+    --chatbox-left-strong-color: var(--bold-color);
+    --chatbox-right-strong-color: var(--bold-color);
+    --chatbox-left-em-color: var(--italic-color);
+    --chatbox-right-em-color: var(--italic-color);
+    --chatbox-left-strong-in-color: var(--chatbox-left-strong-color);
+    --chatbox-right-strong-in-color: var(--chatbox-right-strong-color);
+    --chatbox-left-em-in-color: var(--chatbox-left-em-color);
+    --chatbox-right-em-in-color: var(--chatbox-right-em-color);
+
+    --chatbox-left-li-back-color: transparent;
+    --chatbox-right-li-back-color: transparent;
+    --chatbox-left-img-border-color: var(--chatbox-left-color);
+    --chatbox-right-img-border-color: var(--chatbox-right-color);
+    --chatbox-left-img-back-color: var(--chatbox-left-color);
+    --chatbox-right-img-back-color: var(--chatbox-right-color);
+    --chatbox-left-em-back-color: var(--chatbox-left-color);
+    --chatbox-right-em-back-color: var(--chatbox-right-color);
+
+    --chatbox-left-li-before-border-color: var(--chatbox-left-color);
+    --chatbox-right-li-before-border-color: var(--chatbox-right-color);
+    --chatbox-left-li-before-box-shadow: transparent;
+    --chatbox-right-li-before-box-shadow: transparent;
+    
+    --chatbox-left-li-after-border-color: var(--chatbox-left-color);
+    --chatbox-right-li-after-border-color: var(--chatbox-right-color);
+    --chatbox-left-li-after-back-color: transparent;
+    --chatbox-right-li-after-back-color: transparent;
+
+}
+
+.theme-light {
+    --chatbox-left-pop-color: oklch(from var(--chatbox-left-color) calc(l + 0.25) calc(c - 0.04) h);
+    --chatbox-right-pop-color: oklch(from var(--chatbox-right-color) calc(l + 0.23) calc(c - 0.03) h);
+    --chatbox-left-pop-color-hover: oklch(from var(--chatbox-left-pop-color) calc(l - 0.25) calc(c + 0.04) h);
+    --chatbox-right-pop-color-hover: oklch(from var(--chatbox-right-pop-color) calc(l - 0.25) calc(c + 0.04) h);
+    --chatbox-background-wechat-color: rgb(238, 237, 239);
+    --chatbox-left-wechat-color: rgb(255,254,255);
+    --chatbox-right-wechat-color: rgb(150,236,106);
+    --chatbox-left-wechat-strong-color: orange;
+    --chatbox-right-wechat-strong-color: orange;
+    --chatbox-left-wechat-em-color: green;
+    --chatbox-right-wechat-em-color: green;
+    --chatbox-rightname-wechat-color: green;
+    --chatbox-left-wechat-text-color: rgb(40, 40, 40);
+    --chatbox-right-wechat-text-color: rgb(40, 40, 40);
+
+    --chatbox-background-qqchat-color: rgb(236, 237, 241);
+    --chatbox-left-qqchat-color: rgb(255,255,255);
+    --chatbox-right-qqchat-color: rgb(3, 167, 228);
+    --chatbox-left-qqchat-strong-color: orange;
+    --chatbox-right-qqchat-strong-color: yellow;
+    --chatbox-left-qqchat-em-color: rgb(3, 167, 228);
+    --chatbox-right-qqchat-em-color: rgb(116, 255, 253);
+    --chatbox-left-qqchat-text-color: rgb(40, 40, 40);
+    --chatbox-right-qqchat-text-color: rgb(255, 255, 255);
+
+    --chatbox-background-linshe-color: rgb(236, 227, 219);
+    --chatbox-left-linshe-color: rgb(255, 255, 255);
+    --chatbox-right-linshe-color: rgb(162, 87, 64);
+    --chatbox-left-linshe-strong-color: rgb(162, 87, 64);
+    --chatbox-right-linshe-strong-color: rgb(255, 194, 88);
+    --chatbox-left-linshe-em-color: rgb(162, 87, 64);
+    --chatbox-right-linshe-em-color: rgb(255, 224, 130);
+    --chatbox-left-linshe-text-color: rgb(50, 44, 40);
+    --chatbox-right-linshe-text-color: rgb(255, 255, 255);
+
+    --chatbox-background-baker-color: rgb(236, 237, 241);
+    --chatbox-left-baker-color: rgb(69, 68, 69);
+    --chatbox-right-baker-color: rgb(255, 255, 255);
+    --chatbox-left-baker-strong-color: #ff4982;
+    --chatbox-right-baker-strong-color: #FF0B58;
+    --chatbox-left-baker-em-color: rgb(255, 158, 248);
+    --chatbox-right-baker-em-color: #FF51D6;
+    --chatbox-left-baker-text-color: rgb(215, 215, 215);
+    --chatbox-right-baker-text-color: rgb(40, 40, 40);
+}
+
+.theme-dark {
+    --chatbox-left-pop-color: oklch(from var(--chatbox-left-color) calc(l - 0.25) calc(c - 0.04) h);
+    --chatbox-right-pop-color: oklch(from var(--chatbox-right-color) calc(l - 0.25) calc(c - 0.04) h);
+    --chatbox-left-pop-color-hover: oklch(from var(--chatbox-left-pop-color) calc(l + 0.25) calc(c + 0.04) h);
+    --chatbox-right-pop-color-hover: oklch(from var(--chatbox-right-pop-color) calc(l + 0.25) calc(c + 0.04) h);
+    --chatbox-background-wechat-color: rgb(24, 24, 26);
+    --chatbox-left-wechat-color: rgb(44,44,44);
+    --chatbox-right-wechat-color: rgb(62, 181, 117);
+    --chatbox-left-wechat-strong-color: yellow;
+    --chatbox-right-wechat-strong-color: yellow;
+    --chatbox-left-wechat-em-color: rgb(140, 255, 140);
+    --chatbox-right-wechat-em-color: rgb(140, 255, 140);
+    --chatbox-rightname-wechat-color: rgb(62, 181, 117);
+    --chatbox-left-wechat-text-color: rgb(215, 215, 215);
+    --chatbox-right-wechat-text-color: rgb(40, 40, 40);
+
+    --chatbox-background-qqchat-color: rgb(24, 24, 26);
+    --chatbox-left-qqchat-color: rgb(44,44,44);
+    --chatbox-right-qqchat-color: rgb(44,44,44);
+    --chatbox-left-qqchat-strong-color: rgb(255, 88, 88);
+    --chatbox-right-qqchat-strong-color: rgb(255, 88, 88);
+    --chatbox-left-qqchat-em-color: rgb(255, 158, 248);
+    --chatbox-right-qqchat-em-color: rgb(255, 158, 248);
+    --chatbox-left-qqchat-text-color: rgb(215, 215, 215);
+    --chatbox-right-qqchat-text-color: rgb(215, 215, 215);
+
+    --chatbox-background-linshe-color: rgb(33, 33, 33);
+    --chatbox-left-linshe-color: rgb(52, 50, 48);
+    --chatbox-right-linshe-color: rgb(139, 74, 54);
+    --chatbox-left-linshe-strong-color: rgb(255, 194, 88);
+    --chatbox-right-linshe-strong-color: rgb(255, 194, 88);
+    --chatbox-left-linshe-em-color: rgb(255, 224, 130);
+    --chatbox-right-linshe-em-color: rgb(255, 224, 130);
+    --chatbox-left-linshe-text-color: rgb(225, 220, 215);
+    --chatbox-right-linshe-text-color: rgb(255, 255, 255);
+
+    --chatbox-background-baker-color: rgb(33, 33, 33);
+    --chatbox-left-baker-color: rgb(69, 68, 69);
+    --chatbox-right-baker-color: rgb(238, 237, 237);
+    --chatbox-left-baker-strong-color: #ff4982;
+    --chatbox-right-baker-strong-color: #FF0B58;
+    --chatbox-left-baker-em-color: rgb(255, 158, 248);
+    --chatbox-right-baker-em-color: #FF51D6;
+    --chatbox-left-baker-text-color: rgb(215, 215, 215);
+    --chatbox-right-baker-text-color: rgb(40, 40, 40);
+}
+
+body {
+    --chatbox-leftname-pop-color: var(--chatbox-left-pop-color-hover);
+    --chatbox-rightname-pop-color: var(--chatbox-right-pop-color-hover);
+    --chatbox-border-wechat-color: var(--chatbox-right-wechat-color);
+    --chatbox-border-qqchat-color: var(--chatbox-right-qqchat-color);
+    --chatbox-border-linshe-color: var(--chatbox-right-linshe-color);
+    --chatbox-border-baker-color: var(--chatbox-left-baker-color);
+}
+
+/* === 本体 === */
+
+.markdown-source-view.mod-cm6 .callout[data-callout="chatbox"],
+.block-language-dataviewjs .callout[data-callout="chatbox"],
+.callout[data-callout="chatbox"] {
+    --callout-icon: "<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"angle-double-right\" class=\"svg-inline--fa fa-angle-double-right fa-w-14\"  role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path fill=\"currentColor\" d=\"M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6  0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-94    24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z\"></path></svg>";
+    background-color: transparent;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-shadow: none !important;
+    border: none;
+    border-radius: var(--chatbox-border-in-radius);
+    padding: 0rem;
+    max-width: calc(var(--chatbox-max-width) * 1%);
+    .callout-title {
+        background-color: transparent;
+        text-align: center;
+        margin-top: 0.5rem;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0.5rem;
+        padding: 0rem 0.5rem;
+        width: fit-content;
+        color: var(--chatbox-title-color);
+        border-radius: 1rem;
+        .callout-title-inner {text-align: center;font-weight: bold;}
+        .callout-fold {padding-inline-end: 0rem;}
+    }
+    .callout-content {
+        margin: 0rem;
+        margin-bottom: calc(0rem - var(--chatbox-inner-in-margin));
+        padding: 0rem;
+        & > p {
+            text-align: center;
+            color: var(--chatbox-p-font-in-color);
+            font-size: .8rem;
+            padding: 0rem 4rem 0rem 4rem;
+            margin-top: var(--chatbox-p-inner-in-margin);
+            margin-bottom: calc(var(--chatbox-p-inner-in-margin) + 0.5rem + var(--chatbox-inner-in-margin));
+        }
+        & > ul {
+            display: block;
+            position: relative;
+            margin: 0rem;
+            padding: 0rem;
+            font-size: var(--chatbox-li-text-in-size);
+            overflow: hidden;
+            & > li {
+                position: relative;
+                display: var(--chatbox-li-display);
+                flex-wrap: wrap;
+                word-break: break-all;
+                align-items: center;
+                border: none;
+                border-radius: var(--chatbox-li-border-in-radius);
+                overflow: visible;
+
+                top: calc(var(--chatbox-img-pos) + var(--chatbox-em-font-in-size) + var(--chatbox-em-height) + var(--chatbox-li-after-border-in-width) + var(--chatbox-li-top) + var(--chatbox-em-in-top));
+                margin-top: 0rem;
+                margin-bottom: calc(var(--chatbox-img-pos) * 2 + var(--chatbox-em-font-in-size) + var(--chatbox-em-height) + var(--chatbox-li-after-border-in-width) * 2 + var(--chatbox-li-top) + var(--chatbox-em-in-top) + 0.5rem + var(--chatbox-inner-in-margin));
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+
+                min-width: calc(var(--chatbox-li-text-in-size) * 2 + var(--chatbox-em-in-padding) * 2 + 0.8rem + var(--chatbox-li-after-border-in-width));
+                width: var(--chatbox-li-width);
+                max-width: calc(var(--chatbox-nowrap-max-in-width) * 1% - var(--chatbox-img-in-width) - var(--chatbox-img-pos) - var(--chatbox-li-margin-in-left) - var(--chatbox-li-margin-in-other-left) - var(--chatbox-li-after-border-in-width));
+                min-height: calc(var(--chatbox-img-in-width) - var(--chatbox-em-font-size-change) - var(--chatbox-em-height) - var(--chatbox-li-top-change) - var(--chatbox-em-in-top));
+                line-height: calc(var(--chatbox-li-text-in-size) + 0.6rem);
+                font-weight: normal;
+                list-style: none;
+
+                & > strong + img,
+                & > em + img,
+                & > img:not(:first-of-type),
+                & > img:not([alt^="face"]) {max-width: calc(100%)}
+                & > .image-embed[alt^="face"]:first-child,
+                & > .list-bullet + .image-embed[alt^="face"] {
+                    overflow: hidden;
+                    img {
+                        aspect-ratio: 1 / 1;
+                        object-fit: cover;
+                    }
+                }
+                & > .image-embed {img {max-width: calc(100%)}}
+                &::before {
+                    display: var(--chatbox-li-before-display);
+                    position: absolute;
+                    box-sizing: content-box;
+                    content: " ";
+                    z-index: var(--chatbox-li-before-z-index);
+                    top: var(--chatbox-li-before-top);
+                    width: var(--chatbox-li-before-width);
+                    height: var(--chatbox-li-before-height);
+                    border-width: var(--chatbox-li-before-border-in-width);
+                    border-style: var(--chatbox-li-before-border-style);
+                    border-radius: var(--chatbox-li-before-border-radius);
+                }
+                &::after {
+                    display: var(--chatbox-li-after-display);
+                    position: absolute;
+                    box-sizing: content-box;
+                    content: " ";
+                    z-index: -1;
+                    top: calc(0rem - var(--chatbox-img-pos) - var(--chatbox-em-font-in-size) - var(--chatbox-em-height) - var(--chatbox-li-after-border-in-width) - var(--chatbox-li-top) - var(--chatbox-em-in-top));
+                    width: calc(100% + var(--chatbox-img-in-width) + var(--chatbox-li-margin-in-left) + var(--chatbox-li-margin-in-other-left) + var(--chatbox-img-pos) - var(--chatbox-li-after-border-in-width));
+                    height: calc(100% + var(--chatbox-img-pos) * 2 + var(--chatbox-em-font-in-size) + var(--chatbox-em-height) + var(--chatbox-li-top) + var(--chatbox-em-in-top));
+                    border-width: var(--chatbox-li-after-border-in-width);
+                    border-style: var(--chatbox-border-style);
+                    border-radius: var(--chatbox-li-after-border-in-radius);
+                    padding: 0rem;
+                    margin: 0rem;
+                    box-shadow: 0 .2rem .5rem var(--chatbox-li-after-box-shadow);
+                }
+                & > .list-bullet {display: none;}
+                & > img[alt^="face"]:first-child,
+                & > .image-embed[alt^="face"]:first-child,
+                & > .list-bullet + .image-embed[alt^="face"],
+                & > .list-bullet + img[alt^="face"] {
+                    display: var(--chatbox-img-display);
+                    position: absolute;
+                    top: calc(0rem - var(--chatbox-em-font-in-size) - var(--chatbox-em-height) - var(--chatbox-li-top) - var(--chatbox-em-in-top));
+                    margin-top: 0rem;
+                    margin-bottom: 0rem;
+                    padding: 0rem;
+                    width: var(--chatbox-img-in-width);
+                    height: var(--chatbox-img-in-width);
+                    min-width: var(--chatbox-img-in-width);
+                    border-width: var(--chatbox-img-border-in-width);
+                    border-style: var(--chatbox-border-style);
+                    border-radius: calc(var(--chatbox-img-border-in-radius) * 1%);
+                    object-fit: cover;
+                }
+                & > em:first-child,
+                & > .list-bullet + em,
+                & > .image-embed[alt^="face"] + em,
+                & > img[alt^="face"] + em {
+                    display: var(--chatbox-em-display);
+                    position: absolute;
+                    width: max-content;
+                    top: calc(0rem - var(--chatbox-em-font-in-size) - var(--chatbox-em-height) - var(--chatbox-li-top));
+                    margin-top: 0rem;
+                    margin-bottom: 0rem;
+                    padding-left: var(--chatbox-em-in-padding);
+                    padding-right: var(--chatbox-em-in-padding);
+                    padding-top: var(--chatbox-em-padding-top);
+                    padding-bottom: 0rem;
+                    font-size: var(--chatbox-em-font-in-size);
+                    font-style: normal;
+                    font-weight: bold;
+                    text-align: center;
+                    text-overflow: ellipsis;
+                    line-height: calc(var(--chatbox-em-font-in-size) + var(--chatbox-em-height));
+                    max-height: calc(var(--chatbox-em-font-in-size) + var(--chatbox-em-height));
+                    overflow: hidden;
+                    border-radius: var(--chatbox-em-border-in-radius);
+                }
+            }
+            & > li:has(img[alt^="face"]:first-child, .image-embed[alt^="face"]:first-child, .list-bullet + img[alt^="face"], .list-bullet + .image-embed[alt^="face"], em:first-child, .list-bullet + em, img[alt^="face"] + em, .image-embed[alt^="face"] + em) {
+                --chatbox-li-top: var(--chatbox-li-top-change);
+                --chatbox-em-font-in-size: var(--chatbox-em-font-size-change);
+                --chatbox-li-before-display: var(--chatbox-li-before-display-change);
+            }
+            &:nth-child(2n+1) {
+                & > li {
+                    justify-content: flex-start;
+                    margin-left: calc(var(--chatbox-img-in-width) + var(--chatbox-img-pos) + var(--chatbox-li-margin-in-left) + var(--chatbox-li-margin-in-other-left) + var(--chatbox-li-after-border-in-width));
+                    margin-right: auto;
+                    padding-left: 0.8rem;
+                    padding-right: calc(0.8rem + var(--chatbox-li-after-border-in-width));
+                    text-align: left;
+                    color: var(--chatbox-left-text-in-color);
+                    background-color: var(--chatbox-left-li-back-color);
+                    & > strong {color: var(--chatbox-left-strong-in-color);}
+                    & > em {color: var(--chatbox-left-em-in-color);}
+                    &::before {
+                        left: var(--chatbox-li-before-left);
+                        right: auto;
+                        border-color: var(--chatbox-left-li-before-border-color);
+                        box-shadow: 0.1rem var(--chatbox-li-before-shadow-height) 0rem 0rem var(--chatbox-left-li-before-box-shadow);
+                    }
+                    &::after {
+                        left: calc(0rem - var(--chatbox-img-in-width) - var(--chatbox-li-margin-in-left) - var(--chatbox-li-margin-in-other-left) - var(--chatbox-img-pos) - var(--chatbox-li-after-border-in-width));
+                        right: auto;
+                        border-color: var(--chatbox-left-li-after-border-color);
+                        background-color: var(--chatbox-left-li-after-back-color);
+                    }
+                    & > img[alt^="face"]:first-child,
+                    & > .image-embed[alt^="face"]:first-child,
+                    & > .list-bullet + .image-embed[alt^="face"],
+                    & > .list-bullet + img[alt^="face"] {
+                        left: calc(0rem - var(--chatbox-img-in-width) - var(--chatbox-li-margin-in-left) - var(--chatbox-li-margin-in-other-left));
+                        right: auto;
+                        border-color: var(--chatbox-left-img-border-color);
+                        background-color: var(--chatbox-left-img-back-color);
+                    }
+                    & > em:first-child,
+                    & > .list-bullet + em,
+                    & > .image-embed[alt^="face"] + em,
+                    & > img[alt^="face"] + em {
+                        left: var(--chatbox-em-in-left);
+                        right: auto;
+                        color: var(--chatbox-leftname-in-color);
+                        background-color: var(--chatbox-left-em-back-color);
+                    }
+                }
+            }
+            &:nth-child(2n) {
+                & > li {
+                    justify-content: flex-end;
+                    margin-right: calc(var(--chatbox-img-in-width) + var(--chatbox-img-pos) + var(--chatbox-li-margin-in-left) + var(--chatbox-li-margin-in-other-left) + var(--chatbox-li-after-border-in-width));
+                    margin-left: auto;
+                    padding-right: 0.8rem;
+                    padding-left: calc(0.8rem + var(--chatbox-li-after-border-in-width));
+                    text-align: var(--chatbox-right-li-text-align);
+                    color: var(--chatbox-right-text-in-color);
+                    background-color: var(--chatbox-right-li-back-color);
+                    & > strong {color: var(--chatbox-right-strong-in-color);}
+                    & > em {color: var(--chatbox-right-em-in-color);}
+                    &::before {
+                        left: auto;
+                        right: var(--chatbox-li-before-left);
+                        border-color: var(--chatbox-right-li-before-border-color);
+                        box-shadow: -0.1rem var(--chatbox-li-before-shadow-height) 0rem 0rem var(--chatbox-right-li-before-box-shadow);
+                    }
+                    &::after {
+                        left: auto;
+                        right: calc(0rem - var(--chatbox-img-in-width) - var(--chatbox-li-margin-in-left) - var(--chatbox-li-margin-in-other-left) - var(--chatbox-img-pos) - var(--chatbox-li-after-border-in-width));
+                        border-color: var(--chatbox-right-li-after-border-color);
+                        background-color: var(--chatbox-right-li-after-back-color);
+                    }
+                    & > img[alt^="face"]:first-child,
+                    & > .image-embed[alt^="face"]:first-child,
+                    & > .list-bullet + .image-embed[alt^="face"],
+                    & > .list-bullet + img[alt^="face"] {
+                        left: auto;
+                        right: calc(0rem - var(--chatbox-img-in-width) - var(--chatbox-li-margin-in-left) - var(--chatbox-li-margin-in-other-left));
+                        border-color: var(--chatbox-right-img-border-color);
+                        background-color: var(--chatbox-right-img-back-color);
+                    }
+                    & > em:first-child,
+                    & > .list-bullet + em,
+                    & > .image-embed[alt^="face"] + em,
+                    & > img[alt^="face"] + em {
+                        left: auto;
+                        right: var(--chatbox-em-in-left);
+                        color: var(--chatbox-rightname-in-color);
+                        background-color: var(--chatbox-right-em-back-color);
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* 起始对话框为右边 swap */
+.markdown-source-view.mod-cm6 .callout[data-callout="chatbox"].callout[data-callout-metadata*="swap"],
+.block-language-dataviewjs .callout[data-callout="chatbox"].callout[data-callout-metadata*="swap"],
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="swap"] {
+    .callout-content {
+        & > ul {
+            &:nth-child(2n) {
+                & > li {
+                    justify-content: flex-start;
+                    margin-left: calc(var(--chatbox-img-in-width) + var(--chatbox-img-pos) + var(--chatbox-li-margin-in-left) + var(--chatbox-li-margin-in-other-left) + var(--chatbox-li-after-border-in-width));
+                    margin-right: auto;
+                    padding-left: 0.8rem;
+                    padding-right: calc(0.8rem + var(--chatbox-li-after-border-in-width));
+                    text-align: left;
+                    color: var(--chatbox-left-text-in-color);
+                    background-color: var(--chatbox-left-li-back-color);
+                    & > strong {color: var(--chatbox-left-strong-in-color);}
+                    & > em {color: var(--chatbox-left-em-in-color);}
+                    &::before {
+                        left: var(--chatbox-li-before-left);
+                        right: auto;
+                        border-color: var(--chatbox-left-li-before-border-color);
+                        box-shadow: 0.1rem var(--chatbox-li-before-shadow-height) 0rem 0rem var(--chatbox-left-li-before-box-shadow);
+                    }
+                    &::after {
+                        left: calc(0rem - var(--chatbox-img-in-width) - var(--chatbox-li-margin-in-left) - var(--chatbox-li-margin-in-other-left) - var(--chatbox-img-pos) - var(--chatbox-li-after-border-in-width));
+                        right: auto;
+                        border-color: var(--chatbox-left-li-after-border-color);
+                        background-color: var(--chatbox-left-li-after-back-color);
+                    }
+                    & > img[alt^="face"]:first-child,
+                    & > .image-embed[alt^="face"]:first-child,
+                    & > .list-bullet + .image-embed[alt^="face"],
+                    & > .list-bullet + img[alt^="face"] {
+                        left: calc(0rem - var(--chatbox-img-in-width) - var(--chatbox-li-margin-in-left) - var(--chatbox-li-margin-in-other-left));
+                        right: auto;
+                        border-color: var(--chatbox-left-img-border-color);
+                        background-color: var(--chatbox-left-img-back-color);
+                    }
+                    & > em:first-child,
+                    & > .list-bullet + em,
+                    & > .image-embed[alt^="face"] + em,
+                    & > img[alt^="face"] + em {
+                        left: var(--chatbox-em-in-left);
+                        right: auto;
+                        color: var(--chatbox-leftname-in-color);
+                        background-color: var(--chatbox-left-em-back-color);
+                    }
+                }
+            }
+            &:nth-child(2n+1) {
+                & > li {
+                    justify-content: flex-end;
+                    margin-right: calc(var(--chatbox-img-in-width) + var(--chatbox-img-pos) + var(--chatbox-li-margin-in-left) + var(--chatbox-li-margin-in-other-left) + var(--chatbox-li-after-border-in-width));
+                    margin-left: auto;
+                    padding-right: 0.8rem;
+                    padding-left: calc(0.8rem + var(--chatbox-li-after-border-in-width));
+                    text-align: var(--chatbox-right-li-text-align);
+                    color: var(--chatbox-right-text-in-color);
+                    background-color: var(--chatbox-right-li-back-color);
+                    & > strong {color: var(--chatbox-right-strong-in-color);}
+                    & > em {color: var(--chatbox-right-em-in-color);}
+                    &::before {
+                        left: auto;
+                        right: var(--chatbox-li-before-left);
+                        border-color: var(--chatbox-right-li-before-border-color);
+                        box-shadow: -0.1rem var(--chatbox-li-before-shadow-height) 0rem 0rem var(--chatbox-right-li-before-box-shadow);
+                    }
+                    &::after {
+                        left: auto;
+                        right: calc(0rem - var(--chatbox-img-in-width) - var(--chatbox-li-margin-in-left) - var(--chatbox-li-margin-in-other-left) - var(--chatbox-img-pos) - var(--chatbox-li-after-border-in-width));
+                        border-color: var(--chatbox-right-li-after-border-color);
+                        background-color: var(--chatbox-right-li-after-back-color);
+                    }
+                    & > img[alt^="face"]:first-child,
+                    & > .image-embed[alt^="face"]:first-child,
+                    & > .list-bullet + .image-embed[alt^="face"],
+                    & > .list-bullet + img[alt^="face"] {
+                        left: auto;
+                        right: calc(0rem - var(--chatbox-img-in-width) - var(--chatbox-li-margin-in-left) - var(--chatbox-li-margin-in-other-left));
+                        border-color: var(--chatbox-right-img-border-color);
+                        background-color: var(--chatbox-right-img-back-color);
+                    }
+                    & > em:first-child,
+                    & > .list-bullet + em,
+                    & > .image-embed[alt^="face"] + em,
+                    & > img[alt^="face"] + em {
+                        left: auto;
+                        right: var(--chatbox-em-in-left);
+                        color: var(--chatbox-rightname-in-color);
+                        background-color: var(--chatbox-right-em-back-color);
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* === 不同样式 === */
+
+/* 对话框样式 bbs */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="bbs"] {
+    --chatbox-img-pos: 0rem;
+    --chatbox-li-after-border-in-width: 0rem;
+    --chatbox-li-after-border-in-radius: var(--chatbox-li-after-bbs-border-radius);
+    --chatbox-li-after-box-shadow: transparent;
+    .callout-content > ul > li {padding-bottom: 0rem;}
+}
+
+/* 对话框样式 pop */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="pop"] {
+    --chatbox-li-margin-in-left: var(--chatbox-li-pop-margin-left);
+    --chatbox-li-margin-in-other-left: var(--chatbox-li-before-pop-border-width);
+    --chatbox-li-top: 0rem;
+    --chatbox-li-border-in-radius: var(--chatbox-li-pop-border-radius);
+    --chatbox-img-pos: 0rem;
+    --chatbox-li-after-border-in-width: 0rem;
+    --chatbox-li-after-display: none;
+
+    --chatbox-li-before-top: 0rem;
+    --chatbox-li-before-border-in-width: var(--chatbox-li-before-pop-border-width);
+    --chatbox-li-before-border-style: solid;
+    --chatbox-li-before-pop-left: calc((var(--chatbox-li-pop-border-radius) - 1rem) / 1.5);
+    --chatbox-li-before-pop-in-left: max(var(--chatbox-li-before-pop-left), 0rem);
+    --chatbox-li-before-pop-min-left: calc((var(--chatbox-li-before-pop-border-width) - 1rem) / 1.5);
+    --chatbox-li-before-pop-min-in-left: min(var(--chatbox-li-before-pop-min-left), 0rem);
+    --chatbox-li-before-left: calc(0rem - var(--chatbox-li-before-pop-border-width) + var(--chatbox-li-before-pop-in-left) - var(--chatbox-li-before-pop-min-in-left) + 0.1rem);
+    --chatbox-li-before-border-radius: 0rem;
+    --chatbox-li-before-width: 0rem;
+
+    --chatbox-em-in-left: var(--chatbox-em-pop-left);
+    --chatbox-em-in-top: var(--chatbox-em-pop-top);
+    --chatbox-em-in-padding: 0rem;
+    --chatbox-em-border-in-radius: 0rem;
+    --chatbox-em-height: 0rem;
+    --chatbox-em-font-in-size: 0rem;
+
+    --chatbox-left-img-back-color: var(--chatbox-left-pop-color);
+    --chatbox-right-img-back-color: var(--chatbox-right-pop-color);
+    --chatbox-left-li-back-color: var(--chatbox-left-pop-color);
+    --chatbox-right-li-back-color: var(--chatbox-right-pop-color);
+    --chatbox-left-img-border-color: var(--chatbox-left-pop-color);
+    --chatbox-right-img-border-color: var(--chatbox-right-pop-color);
+    --chatbox-leftname-in-color: var(--chatbox-leftname-pop-color);
+    --chatbox-rightname-in-color: var(--chatbox-rightname-pop-color); 
+    --chatbox-left-em-back-color: transparent;
+    --chatbox-right-em-back-color: transparent;
+    --chatbox-left-li-before-border-color: var(--chatbox-left-pop-color) transparent transparent transparent;
+    --chatbox-right-li-before-border-color: var(--chatbox-right-pop-color) transparent transparent transparent;
+
+    --chatbox-li-top-change: 0.7rem;
+    --chatbox-em-font-size-change: var(--chatbox-em-font-size);
+}
+
+/* 对话框样式 wechat */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="wechat"] {
+	--chatbox-li-margin-in-left: var(--chatbox-li-wechat-margin-left);
+    --chatbox-li-margin-in-other-left: var(--chatbox-li-before-wechat-border-width);
+    --chatbox-li-top: 0rem;
+    --chatbox-li-border-in-radius: var(--chatbox-li-wechat-border-radius);
+    --chatbox-img-pos: 0rem;
+    --chatbox-li-after-border-in-width: 0rem;
+    --chatbox-li-after-display: none;
+    --chatbox-li-text-in-size: var(--chatbox-li-wechat-text-size);
+    --chatbox-nowrap-max-in-width: var(--chatbox-wechat-nowrap-max-width);
+    --chatbox-li-width: max-content;
+    --chatbox-right-li-text-align: left !important;
+    --chatbox-inner-in-margin: var(--chatbox-wechat-inner-margin);
+    --chatbox-p-inner-in-margin: var(--chatbox-p-wechat-inner-margin);
+    --chatbox-border-in-color: var(--chatbox-border-wechat-color);
+    --chatbox-p-font-in-color: var(--chatbox-p-wechat-font-color);
+
+    --chatbox-li-before-border-style: solid;
+    --chatbox-li-before-wechat-left: calc((var(--chatbox-li-wechat-border-radius) - 1rem) / 3);
+    --chatbox-li-before-wechat-in-left: max(var(--chatbox-li-before-wechat-left), 0rem);
+    --chatbox-li-before-left: calc(0rem - var(--chatbox-li-before-wechat-border-width) * 2 + var(--chatbox-li-before-wechat-in-left) + 0.1rem);
+    --chatbox-li-before-border-in-width: var(--chatbox-li-before-wechat-border-width);
+    --chatbox-li-before-border-radius: 0rem;
+    --chatbox-li-before-width: 0rem;
+
+    --chatbox-img-in-width: var(--chatbox-img-wechat-width);
+    --chatbox-img-border-in-radius: var(--chatbox-img-wechat-border-radius);
+    --chatbox-img-border-in-width: var(--chatbox-img-wechat-border-width);
+
+    --chatbox-em-in-left: var(--chatbox-em-wechat-left);
+    --chatbox-em-in-top: var(--chatbox-em-wechat-top);
+    --chatbox-em-in-padding: 0rem;
+    --chatbox-em-border-in-radius: 0rem;
+    --chatbox-em-height: 0rem;
+    --chatbox-em-font-in-size: 0rem;
+
+    --chatbox-li-top-change: 0.4rem;
+    --chatbox-em-font-size-change: var(--chatbox-em-wechat-font-size);
+
+    --chatbox-li-max-height: calc(var(--chatbox-img-in-width) - var(--chatbox-em-font-size-change) - var(--chatbox-li-top-change) - var(--chatbox-em-in-top));
+    --chatbox-li-min-height: calc(var(--chatbox-li-text-in-size) + 1.6rem);
+    --chatbox-li-height: max(var(--chatbox-li-max-height), var(--chatbox-li-min-height));
+    --chatbox-li-before-top: calc(var(--chatbox-li-height) / 2 - var(--chatbox-li-before-wechat-border-width));
+
+    --chatbox-left-img-back-color: var(--chatbox-left-wechat-color);
+    --chatbox-right-img-back-color: var(--chatbox-right-wechat-color);
+    --chatbox-leftname-in-color: var(--chatbox-leftname-wechat-color);
+    --chatbox-rightname-in-color: var(--chatbox-rightname-wechat-color);
+    --chatbox-left-li-back-color: var(--chatbox-left-wechat-color);
+    --chatbox-right-li-back-color: var(--chatbox-right-wechat-color);
+    --chatbox-left-img-border-color: var(--chatbox-left-wechat-color);
+    --chatbox-right-img-border-color: var(--chatbox-right-wechat-color);
+    --chatbox-left-em-back-color: transparent;
+    --chatbox-right-em-back-color: transparent;
+    --chatbox-left-li-before-border-color: transparent var(--chatbox-left-wechat-color) transparent transparent;
+    --chatbox-right-li-before-border-color: transparent transparent transparent var(--chatbox-right-wechat-color);
+    --chatbox-left-text-in-color: var(--chatbox-left-wechat-text-color);
+    --chatbox-right-text-in-color: var(--chatbox-right-wechat-text-color);
+    --chatbox-left-strong-in-color: var(--chatbox-left-wechat-strong-color);
+    --chatbox-right-strong-in-color: var(--chatbox-right-wechat-strong-color);
+    --chatbox-left-em-in-color: var(--chatbox-left-wechat-em-color);
+    --chatbox-right-em-in-color: var(--chatbox-right-wechat-em-color);
+
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--chatbox-background-wechat-color);
+    max-width: calc(var(--chatbox-wechat-max-width) * 1%);
+    --chatbox-border-in-radius: var(--chatbox-border-radius);
+    padding: 0.8rem 0.8rem 0.3rem 0.8rem;
+
+    .callout-title {
+        margin-top: 0rem;
+        color: var(--chatbox-background-wechat-color);
+        .callout-title-inner {color: var(--chatbox-title-wechat-color);}
+        .callout-icon,
+        .callout-icon > .svg-icon {color: var(--chatbox-background-wechat-color);}
+    }
+}
+
+/* 对话框样式 qqchat */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="qqchat"] {
+    --chatbox-li-top: 0rem;
+    --chatbox-li-margin-in-left: var(--chatbox-li-qqchat-margin-left);
+    --chatbox-li-margin-in-other-left: calc(var(--chatbox-li-before-qq-width) / 2 - 0.1rem);
+    --chatbox-li-border-in-radius: var(--chatbox-li-qqchat-border-radius);
+    --chatbox-img-pos: 0rem;
+    --chatbox-li-after-border-in-width: 0rem;
+    --chatbox-li-after-display: none;
+    --chatbox-li-text-in-size: var(--chatbox-li-qqchat-text-size);
+    --chatbox-nowrap-max-in-width: var(--chatbox-qqchat-nowrap-max-width);
+    --chatbox-li-width: max-content;
+    --chatbox-right-li-text-align: left !important;
+    --chatbox-inner-in-margin: var(--chatbox-qqchat-inner-margin);
+    --chatbox-p-inner-in-margin: var(--chatbox-p-qqchat-inner-margin);
+    --chatbox-border-in-color: var(--chatbox-border-qqchat-color);
+    --chatbox-p-font-in-color: var(--chatbox-p-qqchat-font-color);
+
+    --chatbox-li-before-display: block;
+    --chatbox-li-before-border-style: solid;
+    --chatbox-li-before-qqchat-left: calc((var(--chatbox-li-qqchat-border-radius) - 1rem) / 3);
+    --chatbox-li-before-qqchat-in-left: max(var(--chatbox-li-before-qqchat-left), 0rem);
+    --chatbox-li-before-in-top: min(calc(var(--chatbox-li-before-shadow-height) - 0.4rem) , 0rem);
+    --chatbox-li-before-top: calc(0rem - var(--chatbox-li-before-qq-width) / 2 - var(--chatbox-li-before-in-top) + var(--chatbox-li-before-qqchat-in-left));
+    --chatbox-li-before-left: calc(0rem - var(--chatbox-li-before-qq-width) / 2 + 0.1rem + var(--chatbox-li-before-qqchat-in-left));
+    --chatbox-li-before-border-in-width: 0rem;
+    --chatbox-li-before-border-radius: 50%;
+    --chatbox-li-before-width: var(--chatbox-li-before-qq-width);
+    --chatbox-li-before-height: var(--chatbox-li-before-qq-width);
+
+    --chatbox-img-in-width: var(--chatbox-img-qqchat-width);
+    --chatbox-img-border-in-radius: var(--chatbox-img-qqchat-border-radius);
+    --chatbox-img-border-in-width: var(--chatbox-img-qqchat-border-width);
+
+    --chatbox-em-in-left: var(--chatbox-em-qqchat-left);
+    --chatbox-em-in-top: var(--chatbox-em-qqchat-top);
+    --chatbox-em-in-padding: 0rem;
+    --chatbox-em-border-in-radius: 0rem;
+    --chatbox-em-height: 0rem;
+    --chatbox-em-font-in-size: 0rem;
+
+    --chatbox-left-img-back-color: var(--chatbox-left-qqchat-color);
+    --chatbox-right-img-back-color: var(--chatbox-right-qqchat-color);
+    --chatbox-leftname-in-color: var(--chatbox-leftname-qqchat-color);
+    --chatbox-rightname-in-color: var(--chatbox-rightname-qqchat-color);
+    --chatbox-left-li-back-color: var(--chatbox-left-qqchat-color);
+    --chatbox-right-li-back-color: var(--chatbox-right-qqchat-color);
+    --chatbox-left-img-border-color: var(--chatbox-left-qqchat-color);
+    --chatbox-right-img-border-color: var(--chatbox-right-qqchat-color);
+    --chatbox-left-em-back-color: transparent;
+    --chatbox-right-em-back-color: transparent;
+    --chatbox-left-li-before-border-color: transparent;
+    --chatbox-right-li-before-border-color: transparent;
+    --chatbox-left-li-before-box-shadow: var(--chatbox-left-qqchat-color);
+    --chatbox-right-li-before-box-shadow: var(--chatbox-right-qqchat-color);
+    --chatbox-left-text-in-color: var(--chatbox-left-qqchat-text-color);
+    --chatbox-right-text-in-color: var(--chatbox-right-qqchat-text-color);
+    --chatbox-left-strong-in-color: var(--chatbox-left-qqchat-strong-color);
+    --chatbox-right-strong-in-color: var(--chatbox-right-qqchat-strong-color);
+    --chatbox-left-em-in-color: var(--chatbox-left-qqchat-em-color);
+    --chatbox-right-em-in-color: var(--chatbox-right-qqchat-em-color);
+
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--chatbox-background-qqchat-color);
+    max-width: calc(var(--chatbox-qqchat-max-width) * 1%);
+    --chatbox-border-in-radius: var(--chatbox-border-radius);
+    padding: 0.8rem 0.8rem 0.3rem 0.8rem;
+
+    --chatbox-li-top-change: 0.5rem;
+    --chatbox-em-font-size-change: var(--chatbox-em-qqchat-font-size);
+    .callout-title {
+        margin-top: 0rem;
+        color: var(--chatbox-background-qqchat-color);
+        .callout-title-inner {color: var(--chatbox-title-qqchat-color);}
+        .callout-icon,
+        .callout-icon > .svg-icon {color: var(--chatbox-background-qqchat-color);}
+    }
+}
+
+/* 对话框样式 linshe */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="linshe"] {
+    --chatbox-li-top: 0rem;
+    --chatbox-li-margin-in-left: var(--chatbox-li-linshe-margin-left);
+    --chatbox-li-margin-in-other-left: 0rem;
+    --chatbox-li-border-in-radius: var(--chatbox-li-linshe-border-radius);
+    --chatbox-img-pos: 0rem;
+    --chatbox-li-after-border-in-width: 0rem;
+    --chatbox-li-after-display: none;
+    --chatbox-li-text-in-size: var(--chatbox-li-linshe-text-size);
+    --chatbox-nowrap-max-in-width: var(--chatbox-linshe-nowrap-max-width);
+    --chatbox-li-width: max-content;
+    --chatbox-right-li-text-align: left !important;
+    --chatbox-inner-in-margin: var(--chatbox-linshe-inner-margin);
+    --chatbox-p-inner-in-margin: var(--chatbox-p-linshe-inner-margin);
+    --chatbox-border-in-color: var(--chatbox-border-linshe-color);
+    --chatbox-p-font-in-color: var(--chatbox-p-linshe-font-color);
+
+    --chatbox-img-in-width: var(--chatbox-img-linshe-width);
+    --chatbox-img-border-in-radius: var(--chatbox-img-linshe-border-radius);
+    --chatbox-img-border-in-width: var(--chatbox-img-linshe-border-width);
+
+    --chatbox-em-in-left: var(--chatbox-em-linshe-left);
+    --chatbox-em-in-top: var(--chatbox-em-linshe-top);
+    --chatbox-em-in-padding: 0rem;
+    --chatbox-em-border-in-radius: 0rem;
+    --chatbox-em-height: 0rem;
+    --chatbox-em-font-in-size: 0rem;
+
+    --chatbox-left-img-back-color: var(--chatbox-left-linshe-color);
+    --chatbox-right-img-back-color: var(--chatbox-right-linshe-color);
+    --chatbox-leftname-in-color: var(--chatbox-leftname-linshe-color);
+    --chatbox-rightname-in-color: var(--chatbox-rightname-linshe-color);
+    --chatbox-left-li-back-color: var(--chatbox-left-linshe-color);
+    --chatbox-right-li-back-color: var(--chatbox-right-linshe-color);
+    --chatbox-left-img-border-color: var(--chatbox-left-linshe-color);
+    --chatbox-right-img-border-color: var(--chatbox-right-linshe-color);
+    --chatbox-left-em-back-color: transparent;
+    --chatbox-right-em-back-color: transparent;
+    --chatbox-left-li-before-border-color: transparent;
+    --chatbox-right-li-before-border-color: transparent;
+
+    --chatbox-left-text-in-color: var(--chatbox-left-linshe-text-color);
+    --chatbox-right-text-in-color: var(--chatbox-right-linshe-text-color);
+    --chatbox-left-strong-in-color: var(--chatbox-left-linshe-strong-color);
+    --chatbox-right-strong-in-color: var(--chatbox-right-linshe-strong-color);
+    --chatbox-left-em-in-color: var(--chatbox-left-linshe-em-color);
+    --chatbox-right-em-in-color: var(--chatbox-right-linshe-em-color);
+
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--chatbox-background-linshe-color);
+    max-width: calc(var(--chatbox-linshe-max-width) * 1%);
+    --chatbox-border-in-radius: var(--chatbox-border-radius);
+    padding: 0.8rem 0.8rem 0.3rem 0.8rem;
+
+    --chatbox-li-top-change: 0.5rem;
+    --chatbox-em-font-size-change: var(--chatbox-em-linshe-font-size);
+    --chatbox-li-before-display-change: none;
+    .callout-title {
+        margin-top: 0rem;
+        color: var(--chatbox-background-linshe-color);
+        .callout-title-inner {color: var(--chatbox-title-linshe-color);}
+        .callout-icon,
+        .callout-icon > .svg-icon {color: var(--chatbox-background-linshe-color);}
+    }
+}
+
+/* 对话框样式 baker */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="baker"] {
+    --chatbox-li-top: 0rem;
+    --chatbox-li-margin-in-left: var(--chatbox-li-baker-margin-left);
+    --chatbox-li-margin-in-other-left: calc(var(--chatbox-li-before-baker-height) + 0.1rem);
+    --chatbox-li-border-in-radius: var(--chatbox-li-baker-border-radius);
+    --chatbox-img-pos: 0rem;
+    --chatbox-li-after-border-in-width: 0rem;
+    --chatbox-li-after-display: none;
+    --chatbox-li-text-in-size: var(--chatbox-li-baker-text-size);
+    --chatbox-nowrap-max-in-width: var(--chatbox-baker-nowrap-max-width);
+    --chatbox-li-width: max-content;
+    --chatbox-right-li-text-align: left !important;
+    --chatbox-inner-in-margin: var(--chatbox-baker-inner-margin);
+    --chatbox-p-inner-in-margin: var(--chatbox-p-baker-inner-margin);
+    --chatbox-border-in-color: var(--chatbox-border-baker-color);
+    --chatbox-p-font-in-color: var(--chatbox-p-baker-font-color);
+
+    --chatbox-li-before-display: block;
+    --chatbox-li-before-top: 0rem;
+    --chatbox-li-before-left: calc(0rem - var(--chatbox-li-before-baker-height));
+    --chatbox-li-before-width: calc(var(--chatbox-li-before-baker-height) + 0.1rem);
+    --chatbox-li-before-height: var(--chatbox-li-before-baker-height);
+    --chatbox-li-before-border-in-width: 0rem;
+    --chatbox-li-before-border-radius: 0rem;
+    --chatbox-li-before-z-index: 0;
+
+    --chatbox-img-in-width: var(--chatbox-img-baker-width);
+    --chatbox-img-border-in-radius: var(--chatbox-img-baker-border-radius);
+    --chatbox-img-border-in-width: var(--chatbox-img-baker-border-width);
+
+    --chatbox-em-in-left: var(--chatbox-em-baker-left);
+    --chatbox-em-in-top: var(--chatbox-em-baker-top);
+    --chatbox-em-in-padding: 0rem;
+    --chatbox-em-border-in-radius: 0rem;
+    --chatbox-em-height: 0rem;
+    --chatbox-em-font-in-size: 0rem;
+
+    --chatbox-left-img-back-color: var(--chatbox-left-baker-color);
+    --chatbox-right-img-back-color: var(--chatbox-right-baker-color);
+    --chatbox-leftname-in-color: var(--chatbox-leftname-baker-color);
+    --chatbox-rightname-in-color: var(--chatbox-rightname-baker-color);
+    --chatbox-left-li-back-color: var(--chatbox-left-baker-color);
+    --chatbox-right-li-back-color: var(--chatbox-right-baker-color);
+    --chatbox-left-img-border-color: var(--chatbox-left-baker-color);
+    --chatbox-right-img-border-color: var(--chatbox-right-baker-color);
+    --chatbox-left-em-back-color: transparent;
+    --chatbox-right-em-back-color: transparent;
+    --chatbox-left-li-before-border-color: transparent;
+    --chatbox-right-li-before-border-color: transparent;
+    --chatbox-left-text-in-color: var(--chatbox-left-baker-text-color);
+    --chatbox-right-text-in-color: var(--chatbox-right-baker-text-color);
+    --chatbox-left-strong-in-color: var(--chatbox-left-baker-strong-color);
+    --chatbox-right-strong-in-color: var(--chatbox-right-baker-strong-color);
+    --chatbox-left-em-in-color: var(--chatbox-left-baker-em-color);
+    --chatbox-right-em-in-color: var(--chatbox-right-baker-em-color);
+
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--chatbox-background-baker-color);
+    max-width: calc(var(--chatbox-baker-max-width) * 1%);
+    --chatbox-border-in-radius: var(--chatbox-border-radius);
+    padding: 0.8rem 0.8rem 0.3rem 0.8rem;
+
+    --chatbox-li-top-change: 0.5rem;
+    --chatbox-em-font-size-change: var(--chatbox-em-baker-font-size);
+    .callout-title {
+        margin-top: 0rem;
+        color: var(--chatbox-background-baker-color);
+        .callout-title-inner {color: var(--chatbox-title-baker-color);}
+        .callout-icon,
+        .callout-icon > .svg-icon {color: var(--chatbox-background-baker-color);}
+    }
+    & > .callout-content > ul > li {
+        & > img[alt^="face"]:first-child,
+        & > .image-embed[alt^="face"]:first-child,
+        & > .list-bullet + .image-embed[alt^="face"],
+        & > .list-bullet + img[alt^="face"] {
+            top: calc(1rem - var(--chatbox-em-font-in-size) - var(--chatbox-em-height) - var(--chatbox-li-top) - var(--chatbox-em-in-top));
+        }   
+    }
+    & > .callout-content > ul > li::before {
+        box-shadow: none;
+    }
+    & > .callout-content > ul:nth-child(2n+1) > li::before {
+        background: radial-gradient(circle var(--chatbox-li-before-baker-height) at bottom left ,#0000 98%,var(--chatbox-left-baker-color)) bottom left;
+    }
+    & > .callout-content > ul:nth-child(2n) > li::before {
+        background: radial-gradient(circle var(--chatbox-li-before-baker-height) at bottom right ,#0000 98%,var(--chatbox-right-baker-color)) bottom right;
+    }
+    & > .callout-content > ul:nth-child(2n+1) > li {border-top-left-radius: 0rem;}
+    & > .callout-content > ul:nth-child(2n) > li {border-top-right-radius: 0rem;}
+}
+
+/* baker 使用swap时尾巴镜像 */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="baker"].callout[data-callout-metadata*="swap"] {
+    & > .callout-content > ul:nth-child(2n) > li::before {
+        background: radial-gradient(circle var(--chatbox-li-before-baker-height) at bottom left ,#0000 98%,var(--chatbox-left-baker-color)) bottom left;
+    }
+    & > .callout-content > ul:nth-child(2n+1) > li::before {
+        background: radial-gradient(circle var(--chatbox-li-before-baker-height) at bottom right ,#0000 98%,var(--chatbox-right-baker-color)) bottom right;
+    }
+    & > .callout-content > ul:nth-child(2n+1) > li {border-top-right-radius: 0rem; border-top-left-radius: var(--chatbox-li-baker-border-radius);}
+    & > .callout-content > ul:nth-child(2n) > li {border-top-left-radius: 0rem; border-top-right-radius: var(--chatbox-li-baker-border-radius);}
+}
+
+/* === 鼠标悬停色 === */
+
+.toggle-chatbox-hover .callout[data-callout="chatbox"] {
+    .callout-title:hover {
+        color: var(--background-primary);
+        background-color: var(--chatbox-title-color);
+    }
+    & > .callout-content > ul > li:hover {
+        --chatbox-left-text-in-color: var(--background-primary);
+        --chatbox-left-li-after-back-color: var(--chatbox-left-color);
+        --chatbox-left-img-back-color: var(--background-primary);
+        --chatbox-leftname-in-color: var(--chatbox-left-color);
+        --chatbox-right-text-in-color: var(--background-primary);
+        --chatbox-right-li-after-back-color: var(--chatbox-right-color);
+        --chatbox-right-img-back-color: var(--background-primary);
+        --chatbox-rightname-in-color: var(--chatbox-right-color);
+        --chatbox-left-img-border-color: var(--background-primary);
+        --chatbox-right-img-border-color: var(--background-primary);
+        --chatbox-left-em-back-color: var(--background-primary);
+        --chatbox-right-em-back-color: var(--background-primary);
+        --chatbox-left-li-before-border-color: var(--background-primary);
+        --chatbox-right-li-before-border-color: var(--background-primary);
+        --chatbox-li-before-z-index: 0;
+    }
+    &:not(.callout[data-callout-metadata*="wechat"], .callout[data-callout-metadata*="qqchat"], .callout[data-callout-metadata*="linshe"], .callout[data-callout-metadata*="baker"]) > .callout-content > ul > li:hover {
+        a {color: var(--background-primary)}
+    }
+    &.callout[data-callout-metadata*="bbs"] > .callout-content > ul > li:hover {
+        --chatbox-left-img-border-color: var(--chatbox-left-color);
+        --chatbox-right-img-border-color: var(--chatbox-right-color);
+    }
+    &.callout[data-callout-metadata*="pop"] > .callout-content > ul > li:hover {
+        --chatbox-left-img-back-color: var(--chatbox-left-pop-color-hover);
+        --chatbox-right-img-back-color: var(--chatbox-right-pop-color-hover);
+        --chatbox-leftname-in-color: var(--chatbox-leftname-pop-color);
+        --chatbox-rightname-in-color: var(--chatbox-rightname-pop-color);
+        --chatbox-left-li-back-color: var(--chatbox-left-pop-color-hover);
+        --chatbox-right-li-back-color: var(--chatbox-right-pop-color-hover);
+        --chatbox-left-img-border-color: var(--chatbox-left-pop-color-hover);
+        --chatbox-right-img-border-color: var(--chatbox-right-pop-color-hover);
+        --chatbox-left-em-back-color: transparent;
+        --chatbox-right-em-back-color: transparent;
+        --chatbox-left-li-before-border-color: var(--chatbox-left-pop-color-hover) transparent transparent transparent;
+        --chatbox-right-li-before-border-color: var(--chatbox-right-pop-color-hover) transparent transparent transparent;
+        --chatbox-li-before-z-index: -1;
+    }
+    &.callout[data-callout-metadata*="noname"].callout[data-callout-metadata*="pop"] > .callout-content > ul > li:hover {
+        --chatbox-left-li-before-border-color: transparent var(--chatbox-left-pop-color-hover) transparent transparent;
+        --chatbox-right-li-before-border-color: transparent transparent transparent var(--chatbox-right-pop-color-hover);
+    }
+    &.callout[data-callout-metadata*="wechat"] {
+        .callout-title:hover {
+            color: var(--chatbox-title-wechat-color);
+            background-color: var(--chatbox-background-wechat-color);
+        }
+        .callout-content > ul > li:hover {
+            --chatbox-left-img-back-color: var(--chatbox-left-wechat-color);
+            --chatbox-right-img-back-color: var(--chatbox-right-wechat-color);
+            --chatbox-leftname-in-color: var(--chatbox-leftname-wechat-color);
+            --chatbox-rightname-in-color: var(--chatbox-rightname-wechat-color);
+            --chatbox-left-li-back-color: var(--chatbox-left-wechat-color);
+            --chatbox-right-li-back-color: var(--chatbox-right-wechat-color);
+            --chatbox-left-img-border-color: var(--chatbox-left-wechat-color);
+            --chatbox-right-img-border-color: var(--chatbox-right-wechat-color);
+            --chatbox-left-text-in-color: var(--chatbox-left-wechat-text-color);
+            --chatbox-right-text-in-color: var(--chatbox-right-wechat-text-color);
+            --chatbox-left-em-back-color: transparent;
+            --chatbox-right-em-back-color: transparent;
+            --chatbox-left-li-before-border-color: transparent var(--chatbox-left-wechat-color) transparent transparent;
+            --chatbox-right-li-before-border-color: transparent transparent transparent var(--chatbox-right-wechat-color);
+            --chatbox-li-before-z-index: 0;
+            box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);
+
+            img[alt^="face"]:first-child,
+            .image-embed[alt^="face"]:first-child,
+            .list-bullet + .image-embed[alt^="face"],
+            .list-bullet + img[alt^="face"] {box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);}
+            em:first-child,
+            .list-bullet + em,
+            .image-embed[alt^="face"] + em,
+            img[alt^="face"] + em {text-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);}
+        }
+    }
+    &.callout[data-callout-metadata*="qqchat"] {
+        .callout-title:hover {
+            color: var(--chatbox-title-qqchat-color);
+            background-color: var(--chatbox-background-qqchat-color);
+        }
+        .callout-content > ul > li:hover {
+            --chatbox-left-img-back-color: var(--chatbox-left-qqchat-color);
+            --chatbox-right-img-back-color: var(--chatbox-right-qqchat-color);
+            --chatbox-leftname-in-color: var(--chatbox-leftname-qqchat-color);
+            --chatbox-rightname-in-color: var(--chatbox-rightname-qqchat-color);
+            --chatbox-left-li-back-color: var(--chatbox-left-qqchat-color);
+            --chatbox-right-li-back-color: var(--chatbox-right-qqchat-color);
+            --chatbox-left-img-border-color: var(--chatbox-left-qqchat-color);
+            --chatbox-right-img-border-color: var(--chatbox-right-qqchat-color);
+            --chatbox-left-text-in-color: var(--chatbox-left-qqchat-text-color);
+            --chatbox-right-text-in-color: var(--chatbox-right-qqchat-text-color);
+            --chatbox-left-em-back-color: transparent;
+            --chatbox-right-em-back-color: transparent;
+            --chatbox-left-li-before-border-color: transparent;
+            --chatbox-right-li-before-border-color: transparent;
+            --chatbox-li-before-z-index: 0;
+            box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);
+
+            img[alt^="face"]:first-child,
+            .image-embed[alt^="face"]:first-child,
+            .list-bullet + .image-embed[alt^="face"],
+            .list-bullet + img[alt^="face"] {box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);}
+            em:first-child,
+            .list-bullet + em,
+            .image-embed[alt^="face"] + em,
+            img[alt^="face"] + em {text-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);}
+        }
+    }
+    &.callout[data-callout-metadata*="linshe"] {
+        .callout-title:hover {
+            color: var(--chatbox-title-linshe-color);
+            background-color: var(--chatbox-background-linshe-color);
+        }
+        .callout-content > ul > li:hover {
+            --chatbox-left-img-back-color: var(--chatbox-left-linshe-color);
+            --chatbox-right-img-back-color: var(--chatbox-right-linshe-color);
+            --chatbox-leftname-in-color: var(--chatbox-leftname-linshe-color);
+            --chatbox-rightname-in-color: var(--chatbox-rightname-linshe-color);
+            --chatbox-left-li-back-color: var(--chatbox-left-linshe-color);
+            --chatbox-right-li-back-color: var(--chatbox-right-linshe-color);
+            --chatbox-left-img-border-color: var(--chatbox-left-linshe-color);
+            --chatbox-right-img-border-color: var(--chatbox-right-linshe-color);
+            --chatbox-left-text-in-color: var(--chatbox-left-linshe-text-color);
+            --chatbox-right-text-in-color: var(--chatbox-right-linshe-text-color);
+            --chatbox-left-em-back-color: transparent;
+            --chatbox-right-em-back-color: transparent;
+            --chatbox-left-li-before-border-color: transparent;
+            --chatbox-right-li-before-border-color: transparent;
+            --chatbox-li-before-z-index: 0;
+            box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);
+
+            img[alt^="face"]:first-child,
+            .image-embed[alt^="face"]:first-child,
+            .list-bullet + .image-embed[alt^="face"],
+            .list-bullet + img[alt^="face"] {box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);}
+            em:first-child,
+            .list-bullet + em,
+            .image-embed[alt^="face"] + em,
+            img[alt^="face"] + em {text-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);}
+        }
+    }
+    &.callout[data-callout-metadata*="baker"] {
+        .callout-title:hover {
+            color: var(--chatbox-title-baker-color);
+            background-color: var(--chatbox-background-baker-color);
+        }
+        .callout-content > ul > li:hover {
+            --chatbox-left-img-back-color: var(--chatbox-left-baker-color);
+            --chatbox-right-img-back-color: var(--chatbox-right-baker-color);
+            --chatbox-leftname-in-color: var(--chatbox-leftname-baker-color);
+            --chatbox-rightname-in-color: var(--chatbox-rightname-baker-color);
+            --chatbox-left-li-back-color: var(--chatbox-left-baker-color);
+            --chatbox-right-li-back-color: var(--chatbox-right-baker-color);
+            --chatbox-left-img-border-color: var(--chatbox-left-baker-color);
+            --chatbox-right-img-border-color: var(--chatbox-right-baker-color);
+            --chatbox-left-text-in-color: var(--chatbox-left-baker-text-color);
+            --chatbox-right-text-in-color: var(--chatbox-right-baker-text-color);
+            --chatbox-left-em-back-color: transparent;
+            --chatbox-right-em-back-color: transparent;
+            --chatbox-left-li-before-border-color: transparent;
+            --chatbox-right-li-before-border-color: transparent;
+            --chatbox-li-before-z-index: 0;
+            box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);
+
+            img[alt^="face"]:first-child,
+            .image-embed[alt^="face"]:first-child,
+            .list-bullet + .image-embed[alt^="face"],
+            .list-bullet + img[alt^="face"] {box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);}
+            em:first-child,
+            .list-bullet + em,
+            .image-embed[alt^="face"] + em,
+            img[alt^="face"] + em {text-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);}
+        }
+    }
+}
+
+/* 鼠标悬停样式 point */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="point"]:hover {cursor: pointer;}
+
+/* === 额外属性 === */
+
+/* 不显示标题 notitle */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="notitle"] > .callout-title {display: none;}
+
+/* 显示外边框 frame */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="frame"] {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-width: var(--chatbox-border-width);
+    border-style: var(--chatbox-border-style);
+    border-color: var(--chatbox-border-in-color);
+    --chatbox-border-in-radius: var(--chatbox-border-radius);
+    padding: 1rem 1rem 0.5rem 1rem;
+    .callout-title {margin-top: 0rem;}
+}
+
+/* 对话框动态宽度 short */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="short"] {
+    --chatbox-nowrap-max-in-width: var(--chatbox-short-max-width);
+    --chatbox-li-width: max-content;
+    --chatbox-right-li-text-align: left;
+}
+.toggle-chatbox-text-right .callout[data-callout="chatbox"].callout[data-callout-metadata*="short"] {--chatbox-right-li-text-align: right;}
+
+/* 固定高度 fix */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="fix"] {
+    max-height: var(--chatbox-max-height);
+    margin-bottom: 0.5rem;
+    .callout-content {
+        max-height: calc(var(--chatbox-max-height) - 4rem);
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+        mask-image: linear-gradient(180deg, transparent, #000 1rem calc(100% - 1rem), transparent);
+        padding: 1rem 0rem;
+    }
+    .callout-content::-webkit-scrollbar {display: none;}
+}
+
+/* 框体阴影 */
+.toggle-chatbox-shadow .callout[data-callout="chatbox"] {
+    &.callout[data-callout-metadata*="qqchat"],
+    &.callout[data-callout-metadata*="wechat"],
+    &.callout[data-callout-metadata*="linshe"],
+    &.callout[data-callout-metadata*="baker"],
+    &.callout[data-callout-metadata*="frame"] {box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow) !important;}
+}
+.toggle-chatbox-inner-shadow .callout[data-callout="chatbox"] {--chatbox-li-after-box-shadow: var(--background-modifier-box-shadow);}
+
+/* 不显示名字 noname */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="noname"] {
+    --chatbox-em-display: none;
+    --chatbox-li-top: 0rem;
+    --chatbox-em-in-top: 0rem;
+    --chatbox-em-height: 0rem;
+    --chatbox-em-font-in-size: 0rem;
+    --chatbox-em-in-padding: 0rem;
+    --chatbox-li-margin-in-left: var(--chatbox-li-noname-margin-left);
+    --chatbox-li-display: flex;
+    --chatbox-right-li-text-align: left;
+    --chatbox-li-top-change: 0rem;
+    --chatbox-em-font-size-change: 0rem;
+    --chatbox-li-before-display-change: none;
+
+    &.callout[data-callout-metadata*="bbs"] > .callout-content > ul > li {padding-bottom: 0.5rem;}
+    &.callout[data-callout-metadata*="pop"] {
+        --chatbox-img-in-width: var(--chatbox-img-pop-noname-width);
+        --chatbox-li-pop-min-height: calc(var(--chatbox-li-text-in-size) + 1.6rem);
+        --chatbox-li-pop-height: max(var(--chatbox-img-in-width), var(--chatbox-li-pop-min-height));
+        --chatbox-li-before-top: calc(var(--chatbox-li-pop-height) / 2 - var(--chatbox-li-before-pop-border-width) / 2);
+        --chatbox-li-before-left: calc(0rem - var(--chatbox-li-before-pop-border-width) + 0.1rem);
+        --chatbox-li-margin-in-left: var(--chatbox-li-pop-margin-left);
+        --chatbox-li-margin-in-other-left: calc(var(--chatbox-li-before-pop-border-width) / 2);
+        --chatbox-li-before-border-in-width: calc(var(--chatbox-li-before-pop-border-width) / 2);
+        --chatbox-left-li-before-border-color: transparent var(--chatbox-left-pop-color) transparent transparent;
+        --chatbox-right-li-before-border-color: transparent transparent transparent var(--chatbox-right-pop-color);
+        --chatbox-li-before-display-change: block;
+    }
+    &.callout[data-callout-metadata*="wechat"] {
+        --chatbox-li-margin-in-left: var(--chatbox-li-wechat-margin-left);
+        --chatbox-img-in-width: var(--chatbox-img-wechat-noname-width);
+        --chatbox-li-before-display-change: block;
+    }
+    &.callout[data-callout-metadata*="qqchat"] {
+        --chatbox-li-margin-in-left: var(--chatbox-li-qqchat-margin-left);
+        --chatbox-img-in-width: var(--chatbox-img-qqchat-noname-width);
+        --chatbox-li-before-display-change: block;
+    }
+    &.callout[data-callout-metadata*="linshe"] {
+        --chatbox-li-margin-in-left: var(--chatbox-li-linshe-margin-left);
+        --chatbox-img-in-width: var(--chatbox-img-linshe-noname-width);
+    }
+    &.callout[data-callout-metadata*="baker"] {
+        --chatbox-li-margin-in-left: var(--chatbox-li-baker-margin-left);
+        --chatbox-img-in-width: var(--chatbox-img-baker-noname-width);
+        --chatbox-li-before-display-change: block;
+        --chatbox-li-top-change: 0.6rem;
+        & > .callout-content > ul > li {
+            & > img[alt^="face"]:first-child,
+            & > .image-embed[alt^="face"]:first-child,
+            & > .list-bullet + .image-embed[alt^="face"],
+            & > .list-bullet + img[alt^="face"] {
+                top: calc(0rem - var(--chatbox-em-font-in-size) - var(--chatbox-em-height) - var(--chatbox-li-top) - var(--chatbox-em-in-top));
+            }   
+        }
+        & > .callout-content > ul > li:has(img[alt^="face"]:first-child, .image-embed[alt^="face"]:first-child, .list-bullet + img[alt^="face"], .list-bullet + .image-embed[alt^="face"], em:first-child, .list-bullet + em, img[alt^="face"] + em, .image-embed[alt^="face"] + em) {
+            --chatbox-li-top: 0.5rem;
+        }
+    }
+}
+
+.toggle-chatbox-text-center .callout[data-callout="chatbox"] {
+    --chatbox-li-display: flex;
+    --chatbox-right-li-text-align: left;
+}
+
+.toggle-chatbox-text-noname-nocenter .callout[data-callout="chatbox"].callout[data-callout-metadata*="noname"] {
+    --chatbox-li-display: block;
+    --chatbox-right-li-text-align: right;
+}
+
+/* 不显示头像 noface */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="noface"] {
+    --chatbox-li-margin-in-left: 0rem;
+    --chatbox-img-display: none;
+    --chatbox-img-in-width: 0rem;
+    &.callout[data-callout-metadata*="noname"] {
+        &.callout[data-callout-metadata*="pop"] {
+            --chatbox-li-margin-in-left: 0rem;
+            --chatbox-img-in-width: 0rem;
+            --chatbox-li-before-top: calc(50% - var(--chatbox-li-before-pop-border-width) / 2);
+        }
+        &.callout[data-callout-metadata*="wechat"] {
+            --chatbox-li-margin-in-left: 0rem;
+            --chatbox-img-in-width: 0rem;
+            --chatbox-li-before-top: calc(50% - var(--chatbox-li-before-wechat-border-width));
+        }
+        &.callout[data-callout-metadata*="linshe"],
+        &.callout[data-callout-metadata*="baker"],
+        &.callout[data-callout-metadata*="qqchat"] {
+            --chatbox-li-margin-in-left: 0rem;
+            --chatbox-img-in-width: 0rem;
+        }
+    }
+}
+
+/* 对话框固定宽度 long */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="long"] {
+    max-width: calc(100%);
+    --chatbox-nowrap-max-in-width: 100;
+}
+
+/* === debug === */
+
+.toggle-chatbox-border .callout[data-callout="chatbox"] {border: 1px solid !important;}
+.toggle-chatbox-ul-border .callout[data-callout="chatbox"] > .callout-content > ul {border: 1px solid !important;}
+.toggle-chatbox-li-border .callout[data-callout="chatbox"] > .callout-content > ul > li {border: 1px solid !important;}
+.toggle-chatbox-p-border .callout[data-callout="chatbox"] > .callout-content > p {border: 1px solid;}
+.toggle-chatbox-li-bottom .callout[data-callout="chatbox"] > .callout-content > ul > li {
+    margin-bottom: calc(var(--chatbox-img-pos) * 2 + var(--chatbox-em-font-in-size) + var(--chatbox-em-height) + var(--chatbox-li-after-border-in-width) * 2 + var(--chatbox-li-top) + var(--chatbox-em-in-top)) !important;
+}
+
+/* 平板微调 */
+
+.is-mobile {
+    --chatbox-em-padding-top: 0.1rem;
+}
