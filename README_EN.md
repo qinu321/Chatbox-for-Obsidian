@@ -3,6 +3,7 @@
 [中文](./README.md)
 
 Turn your Obsidian into a chatflow display with nothing but CSS snippets!
+
 Meet Chatbox — CSS written exclusively for Obsidian.
 
 ## Table of Contents
@@ -37,6 +38,7 @@ Currently verified working on Obsidian 1.13.7, and theoretically should continue
 
 Note: The bold and italic colors for **Basic**, **bbs**, and **pop** use your Obsidian theme's accent colors. All colors can be freely customized after installing the [Style Settings](https://github.com/community-archive/obsidian-style-settings) plugin!
 
+
 ### Basic + First Line Right
 
 ![Basic style first line right - light mode](./Image/preview-basic-right-light.jpg)
@@ -70,6 +72,7 @@ Note: The bold and italic colors for **Basic**, **bbs**, and **pop** use your Ob
 ### Linshe
 
 [What's Linshe?](https://github.com/icecranberry/galgame-with-comfyUI)
+
 Matches the chat display style of Linshe.
 
 ![Linshe style - light mode](./Image/preview-linshe-light.jpg)
@@ -93,10 +96,13 @@ Combine a few simple attributes, and you can even achieve this look!
 Download the zip from Releases, extract it, then:
 
 1. Copy `chatbox.css` and `chatbox-inputbox.css` from the `Css` folder into your Obsidian CSS snippets folder (Settings → Appearance → CSS snippets → click the folder icon).
+
    Usually located at `.obsidian/snippets` in your vault.
+   
    Then go back to Settings → Appearance → CSS snippets and enable both `chatbox` and `chatbox-inputbox`.
 
 2. Copy the entire `Chat Generator` folder into your vault's root directory. Open the sample notes in Obsidian to verify the styles are working.
+
 
 ## Recommended Plugins
 
@@ -106,13 +112,16 @@ Download the zip from Releases, extract it, then:
 After installing Dataview, you need to enable the `enable JavaScript queries` option so it supports `dataviewjs` — this is required for the Chat Generator to work.
 
 Style Settings gives you incredibly detailed control over Chatbox!
+
 Customize dialog width, bubble colors, background color, bold & italic text colors — almost every style can be configured individually.
 
 ## Chat Generator
 
 A mini-app that runs directly inside Obsidian, helping you generate Chatbox-compatible chatflow text without memorizing any syntax.
 
-It's dead simple — just pick your style and go. For details on adding character avatars, check out the [02-Chat Characters-En](./Chat%20Generator/02%20Material/Character/02-Chat%20Characters-En).
+It's dead simple — just pick your style and go. For details on adding character avatars, check out the [02-Chat Characters-En](./Chat%20Generator/02%20Material/Character/02-Chat%20Characters-En.md).
+
+↑In GitHub's strict Markdown rendering this may not display correctly. Opening it in Obsidian is recommended.
 
 The generator automatically detects your Obsidian language setting and displays the interface in Chinese or English.
 
@@ -256,6 +265,7 @@ But honestly, **you really don't need to remember any of this**. Use the **Chat 
 ## Credits
 
 Huge thanks to **稻米鼠 (DaoMiShu)** for their TimeLine and chat-bubble CSS code!
+
 Chatbox is built entirely on top of those two foundations.
 
 Also many thanks to Obsidian's native callout system, Style Settings plugin authors, and Dataview plugin authors!
