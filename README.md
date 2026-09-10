@@ -43,33 +43,33 @@
 
 ### 基础+首行为右
 
-![基础样式首行为右—浅色模式](./Image/preview-basic-right-light.jpg)
-![基础样式首行为右—深色模式](./Image/preview-basic-right-dark.jpg)
+![基础样式首行为右—浅色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-right-light.jpg)
+![基础样式首行为右—深色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-right-dark.jpg)
 
 ### 基础+首行为左
 
-![基础样式首行为左—浅色模式](./Image/preview-basic-left-light.jpg)
-![基础样式首行为左—深色模式](./Image/preview-basic-left-dark.jpg)
+![基础样式首行为左—浅色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-left-light.jpg)
+![基础样式首行为左—深色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-left-dark.jpg)
 
 ### bbs
 
-![bbs 风格—浅色模式](./Image/preview-bbs-light.jpg)
-![bbs 风格—深色模式](./Image/preview-bbs-dark.jpg)
+![bbs 风格—浅色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-bbs-light.jpg)
+![bbs 风格—深色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-bbs-dark.jpg)
 
 ### pop
 
-![pop 风格—浅色模式](./Image/preview-pop-light.jpg)
-![pop 风格—深色模式](./Image/preview-pop-dark.jpg)
+![pop 风格—浅色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-pop-light.jpg)
+![pop 风格—深色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-pop-dark.jpg)
 
 ### wechat
 
-![wechat 风格—浅色模式](./Image/preview-wechat-light.jpg)
-![wechat 风格—深色模式](./Image/preview-wechat-dark.jpg)
+![wechat 风格—浅色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-wechat-light.jpg)
+![wechat 风格—深色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-wechat-dark.jpg)
 
 ### qqchat
 
-![qqchat 风格—浅色模式](./Image/preview-qqchat-light.jpg)
-![qqchat 风格—深色模式](./Image/preview-qqchat-dark.jpg)
+![qqchat 风格—浅色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-qqchat-light.jpg)
+![qqchat 风格—深色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-qqchat-dark.jpg)
 
 ### 邻舍
 
@@ -77,21 +77,21 @@
 
 跟邻舍的聊天显示样式一致
 
-![邻舍风格—浅色模式](./Image/preview-linshe-light.jpg)
-![邻舍风格—深色模式](./Image/preview-linshe-dark.jpg)
+![邻舍风格—浅色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-linshe-light.jpg)
+![邻舍风格—深色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-linshe-dark.jpg)
 
 ### Baker
 
 对、就是模仿终末地里的Baker
 
-![Baker 风格—浅色模式](./Image/preview-baker-light.jpg)
-![Baker 风格—深色模式](./Image/preview-baker-dark.jpg)
+![Baker 风格—浅色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-baker-light.jpg)
+![Baker 风格—深色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-baker-dark.jpg)
 
 ### 基础+无名字+无头像+无标题
 
 搭配组合一些超简单代码，你甚至能实现这样的样式！
 
-![基础样式无名字无头像无标题—浅色模式](./Image/preview-basic-minimal-light.jpg)
+![基础样式无名字无头像无标题—浅色模式](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-minimal-light.jpg)
 
 
 ## 安装方法
@@ -130,13 +130,13 @@ Style Settings里则有着Chatbox的超丰富设置细节！
 ↑在github的严格换行下会错误显示，推荐去Obsidian里看。
 
 点击头像就会出现角色对话框，输入文字按回车就会生成ta的对话
-![对话生成器—点击头像输入对话](./Image/generator-avatar-chat.jpg)
+![对话生成器—点击头像输入对话](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/generator-avatar-chat.jpg)
 
 点开编辑框，你甚至能直接拖动排序、更改反向位置、切换角色（点击角色头像就能替换角色）等等
-![对话生成器—编辑框拖动排序](./Image/generator-editor-edit.jpg)
+![对话生成器—编辑框拖动排序](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/generator-editor-edit.jpg)
 
 点开代码框，可以直接粘贴已有的对话代码，方便用生成器修改
-![对话生成器—代码框粘贴](./Image/generator-code-paste.jpg)
+![对话生成器—代码框粘贴](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/generator-code-paste.jpg)
 
 你甚至可以在代码框里直接写角色的对话（不需要名字）
 
@@ -164,7 +164,7 @@ Style Settings里则有着Chatbox的超丰富设置细节！
 
 默认模板里有能被生成器直接替换的变量，修改模板时可以照着使用。
 
-![对话生成器—模板预览与生成笔记按钮](./Image/generator-template-preview.jpg)
+![对话生成器—模板预览与生成笔记按钮](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/generator-template-preview.jpg)
 
 只想复制则可以去最后的代码预览框那里，有Obsidian原生的复制按钮。
 

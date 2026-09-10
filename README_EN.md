@@ -41,33 +41,33 @@ Note: The bold and italic colors for **Basic**, **bbs**, and **pop** use your Ob
 
 ### Basic + First Line Right
 
-![Basic style first line right - light mode](./Image/preview-basic-right-light.jpg)
-![Basic style first line right - dark mode](./Image/preview-basic-right-dark.jpg)
+![Basic style first line right - light mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-right-light.jpg)
+![Basic style first line right - dark mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-right-dark.jpg)
 
 ### Basic + First Line Left
 
-![Basic style first line left - light mode](./Image/preview-basic-left-light.jpg)
-![Basic style first line left - dark mode](./Image/preview-basic-left-dark.jpg)
+![Basic style first line left - light mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-left-light.jpg)
+![Basic style first line left - dark mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-left-dark.jpg)
 
 ### bbs
 
-![bbs style - light mode](./Image/preview-bbs-light.jpg)
-![bbs style - dark mode](./Image/preview-bbs-dark.jpg)
+![bbs style - light mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-bbs-light.jpg)
+![bbs style - dark mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-bbs-dark.jpg)
 
 ### pop
 
-![pop style - light mode](./Image/preview-pop-light.jpg)
-![pop style - dark mode](./Image/preview-pop-dark.jpg)
+![pop style - light mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-pop-light.jpg)
+![pop style - dark mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-pop-dark.jpg)
 
 ### wechat
 
-![wechat style - light mode](./Image/preview-wechat-light.jpg)
-![wechat style - dark mode](./Image/preview-wechat-dark.jpg)
+![wechat style - light mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-wechat-light.jpg)
+![wechat style - dark mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-wechat-dark.jpg)
 
 ### qqchat
 
-![qqchat style - light mode](./Image/preview-qqchat-light.jpg)
-![qqchat style - dark mode](./Image/preview-qqchat-dark.jpg)
+![qqchat style - light mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-qqchat-light.jpg)
+![qqchat style - dark mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-qqchat-dark.jpg)
 
 ### Linshe
 
@@ -75,21 +75,21 @@ Note: The bold and italic colors for **Basic**, **bbs**, and **pop** use your Ob
 
 Matches the chat display style of Linshe.
 
-![Linshe style - light mode](./Image/preview-linshe-light.jpg)
-![Linshe style - dark mode](./Image/preview-linshe-dark.jpg)
+![Linshe style - light mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-linshe-light.jpg)
+![Linshe style - dark mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-linshe-dark.jpg)
 
 ### Baker
 
 Yep, it mimics Baker from *Arknights: Endfield*.
 
-![Baker style - light mode](./Image/preview-baker-light.jpg)
-![Baker style - dark mode](./Image/preview-baker-dark.jpg)
+![Baker style - light mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-baker-light.jpg)
+![Baker style - dark mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-baker-dark.jpg)
 
 ### Basic + No Name + No Avatar + No Title
 
 Combine a few simple attributes, and you can even achieve this look!
 
-![Basic style with no name, avatar, or title - light mode](./Image/preview-basic-minimal-light.jpg)
+![Basic style with no name, avatar, or title - light mode](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/preview-basic-minimal-light.jpg)
 
 ## Installation
 
@@ -127,15 +127,15 @@ The generator automatically detects your Obsidian language setting and displays 
 
 Click a character avatar to open their dialog box, type text and press Enter to generate their chat line.
 
-![Chat Generator - click avatar to chat](./Image/generator-avatar-chat.jpg)
+![Chat Generator - click avatar to chat](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/generator-avatar-chat.jpg)
 
 Open the editor panel to drag-and-drop reorder, flip sides, or swap characters (click the avatar to replace).
 
-![Chat Generator - editor drag and sort](./Image/generator-editor-edit.jpg)
+![Chat Generator - editor drag and sort](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/generator-editor-edit.jpg)
 
 Open the code panel to paste existing chat code for editing with the generator.
 
-![Chat Generator - paste code into code panel](./Image/generator-code-paste.jpg)
+![Chat Generator - paste code into code panel](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/generator-code-paste.jpg)
 
 You can even write dialogue directly in the code panel (no names needed):
 
@@ -161,7 +161,7 @@ Then use the editor panel to assign characters and adjust sides.
 
 When you're done, click the last button above the preview to generate a note in your configured folder. The default template contains variables that the generator can replace directly — you can modify the template too.
 
-![Chat Generator - template preview and generate button](./Image/generator-template-preview.jpg)
+![Chat Generator - template preview and generate button](https://raw.githubusercontent.com/qinu321/Chatbox-for-Obsidian/main/Image/generator-template-preview.jpg)
 
 If you just want to copy the raw code, the code preview panel at the bottom has Obsidian's native copy button.
 
