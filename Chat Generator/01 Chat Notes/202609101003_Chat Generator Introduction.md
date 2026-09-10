@@ -20,7 +20,7 @@ Previous one:: [[202609100929_Chatbox Style Demo]]
 > + And just like that, a line of dialogue is added — super easy!
 > - ![[icon_03_amami_02.png|face]] *Amami* Oh that's easy~ but once I have all the dialogue done, how do I turn it into an md document?
 > + ![[icon_02_moon_02.png|face]] *moon* See those 4 buttons above the preview? The last one is the note generator — just press it
-> ![[Snipaste_2026-09-10_08-47-21.jpg]]
+> ![[generator-template-preview.jpg]]
 > + ![[icon_02_moon_01.png|face]] *moon* By the way, the code display panel at the bottom also has a copy button — click it to copy all the dialogue code, and then you can paste it wherever you want
 > 
 > Some time later
