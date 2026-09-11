@@ -22,12 +22,16 @@ jobs:
             README_EN.md \
             LICENSE.md
 
+      - name: Get commit message
+        id: commit_msg
+        run: |
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          git log -1 --pretty=format:"%s%n%n%b" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: Chatbox-for-Obsidian.zip
           name: Chatbox ${{ github.ref_name }}
-          body: |
-            下载后解压，将 `Css/` 和 `Chat Generator/` 放入 Obsidian 库即可使用。
-
-            Extract the zip, then copy `Css/` and `Chat Generator/` into your Obsidian vault.
+          body: ${{ steps.commit_msg.outputs.body }}
