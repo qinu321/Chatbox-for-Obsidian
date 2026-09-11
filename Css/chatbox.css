@@ -3,8 +3,8 @@
  * @author: 千野
  * @description: 改造自稻米鼠老师的TimeLine和chat-bubble，显示对话形式的callout视图
  * @created: 2024-08-08
- * @updated: 2026-08-21
- * @version: 1.0.0
+ * @updated: 2026-09-11
+ * @version: 1.0.1
  */
 
 /* === Style Settings === */
@@ -712,13 +712,23 @@ settings:
         format: rem
     -
         id: chatbox-li-linshe-border-radius
-        title: Dialogue frame radius(linshe mod)
-        title.zh: 对话框圆角（linshe模式）
+        title: Dialogue big frame radius(linshe mod)
+        title.zh: 对话框大圆角（linshe模式）
         type: variable-number-slider
-        default: 0.5
+        default: 1
         min: 0
         max: 1.5
         step: 0.1
+        format: rem
+    -
+        id: chatbox-li-linshe-border-top-radius
+        title: Dialogue small frame radius(linshe mod)
+        title.zh: 对话框小圆角（linshe模式）
+        type: variable-number-slider
+        default: 0.25
+        min: 0
+        max: 1.5
+        step: 0.05
         format: rem
     -
         id: chatbox-img-linshe-width
@@ -1955,7 +1965,8 @@ body {
     --chatbox-li-pop-border-radius: 1rem;
     --chatbox-li-wechat-border-radius: 0.5rem;
     --chatbox-li-qqchat-border-radius: 1rem;
-    --chatbox-li-linshe-border-radius: 0.5rem;
+    --chatbox-li-linshe-border-radius: 1rem;
+    --chatbox-li-linshe-border-top-radius: 0.25rem;
     --chatbox-li-baker-border-radius: 1rem;
     --chatbox-li-linshe-margin-left: 0.5rem;
     --chatbox-li-baker-margin-left: 0.3rem;
@@ -2054,8 +2065,6 @@ body {
     --chatbox-leftname-wechat-color: var(--text-muted);
     --chatbox-leftname-qqchat-color: var(--text-muted);
     --chatbox-rightname-qqchat-color: var(--text-muted);
-    --chatbox-leftname-linshe-color: #8c8074;
-    --chatbox-rightname-linshe-color: #8c8074;
     --chatbox-leftname-baker-color: var(--text-muted);
     --chatbox-rightname-baker-color: var(--text-muted);
 
@@ -2068,7 +2077,6 @@ body {
     --chatbox-p-font-in-color: var(--chatbox-p-font-color);
     --chatbox-p-wechat-font-color: var(--text-faint);
     --chatbox-p-qqchat-font-color: var(--text-faint);
-    --chatbox-p-linshe-font-color: #8c8074;
     --chatbox-p-baker-font-color: var(--text-faint);
     --chatbox-border-color: hsla(var(--interactive-accent-hsl));
     --chatbox-border-in-color: var(--chatbox-border-color);
@@ -2135,13 +2143,18 @@ body {
 
     --chatbox-background-linshe-color: rgb(236, 227, 219);
     --chatbox-left-linshe-color: rgb(255, 255, 255);
-    --chatbox-right-linshe-color: rgb(162, 87, 64);
-    --chatbox-left-linshe-strong-color: rgb(162, 87, 64);
-    --chatbox-right-linshe-strong-color: rgb(255, 194, 88);
-    --chatbox-left-linshe-em-color: rgb(162, 87, 64);
+    --chatbox-right-linshe-color: rgb(220, 120, 105);
+    --chatbox-left-linshe-strong-color: rgb(220, 120, 105);
+    --chatbox-right-linshe-strong-color: rgb(255, 208, 126);
+    --chatbox-left-linshe-em-color: rgb(220, 120, 105);
     --chatbox-right-linshe-em-color: rgb(255, 224, 130);
     --chatbox-left-linshe-text-color: rgb(50, 44, 40);
     --chatbox-right-linshe-text-color: rgb(255, 255, 255);
+    --chatbox-leftname-linshe-color: #8c8074;
+    --chatbox-rightname-linshe-color: #8c8074;
+    --chatbox-p-linshe-font-color: #8c8074;
+    --chatbox-li-linshe-box-shadow: rgba(0, 0, 0, 0.1);
+
 
     --chatbox-background-baker-color: rgb(236, 237, 241);
     --chatbox-left-baker-color: rgb(69, 68, 69);
@@ -2180,15 +2193,19 @@ body {
     --chatbox-left-qqchat-text-color: rgb(215, 215, 215);
     --chatbox-right-qqchat-text-color: rgb(215, 215, 215);
 
-    --chatbox-background-linshe-color: rgb(33, 33, 33);
-    --chatbox-left-linshe-color: rgb(52, 50, 48);
-    --chatbox-right-linshe-color: rgb(139, 74, 54);
-    --chatbox-left-linshe-strong-color: rgb(255, 194, 88);
-    --chatbox-right-linshe-strong-color: rgb(255, 194, 88);
-    --chatbox-left-linshe-em-color: rgb(255, 224, 130);
+    --chatbox-background-linshe-color: rgb(33, 24, 33);
+    --chatbox-left-linshe-color: rgb(39, 35, 46);
+    --chatbox-right-linshe-color: rgb(250, 115, 93);
+    --chatbox-left-linshe-strong-color: rgb(250, 115, 93);
+    --chatbox-right-linshe-strong-color: rgb(255, 224, 130);
+    --chatbox-left-linshe-em-color: rgb(250, 115, 93);
     --chatbox-right-linshe-em-color: rgb(255, 224, 130);
     --chatbox-left-linshe-text-color: rgb(225, 220, 215);
     --chatbox-right-linshe-text-color: rgb(255, 255, 255);
+    --chatbox-leftname-linshe-color: #a39ba9;
+    --chatbox-rightname-linshe-color: #a39ba9;
+    --chatbox-p-linshe-font-color: #a39ba9;
+    --chatbox-li-linshe-box-shadow: rgba(0, 0, 0, 0.34);
 
     --chatbox-background-baker-color: rgb(33, 33, 33);
     --chatbox-left-baker-color: rgb(69, 68, 69);
@@ -2846,6 +2863,15 @@ body {
         .callout-icon,
         .callout-icon > .svg-icon {color: var(--chatbox-background-linshe-color);}
     }
+    & > .callout-content > ul > li {box-shadow: 0 2px 0 var(--chatbox-li-linshe-box-shadow);}
+    & > .callout-content > ul:nth-child(2n+1) > li {border-top-left-radius: var(--chatbox-li-linshe-border-top-radius);}
+    & > .callout-content > ul:nth-child(2n) > li {border-top-right-radius: var(--chatbox-li-linshe-border-top-radius);}
+}
+
+/* linshe 使用swap时镜像 */
+.callout[data-callout="chatbox"].callout[data-callout-metadata*="linshe"].callout[data-callout-metadata*="swap"] {
+    & > .callout-content > ul:nth-child(2n+1) > li {border-top-right-radius: var(--chatbox-li-linshe-border-top-radius); border-top-left-radius: var(--chatbox-li-linshe-border-radius);}
+    & > .callout-content > ul:nth-child(2n) > li {border-top-left-radius: var(--chatbox-li-linshe-border-top-radius); border-top-right-radius: var(--chatbox-li-linshe-border-radius);}
 }
 
 /* 对话框样式 baker */
@@ -3091,7 +3117,7 @@ body {
             --chatbox-left-li-before-border-color: transparent;
             --chatbox-right-li-before-border-color: transparent;
             --chatbox-li-before-z-index: 0;
-            box-shadow: 0 .2rem .5rem var(--background-modifier-box-shadow);
+            box-shadow: 0 .2rem .5rem var(--chatbox-li-linshe-box-shadow);
 
             img[alt^="face"]:first-child,
             .image-embed[alt^="face"]:first-child,
